@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmmaking Portfolio - Happy's Website</title>
+    <link rel="icon" type="image/png" href="../img/happylogonav.png">
+    <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <style>
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+            padding: 0;
+            transition: all 0.3s ease-out;
+        }
+        
+        .video-card {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            width: 100%;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .video-content {
+            padding: 12px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        
+        .video-title {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #000;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .video-contribution {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        
+        .video-date {
+            font-size: 10px;
+            color: #999;
+            line-height: 1.3;
+        }
+        
+        .video-thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            border: none;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .category-section {
+            margin-bottom: 20px;
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+        
+        .category-heading {
+            font-size: 26px;
+            font-weight: 500;
+            color: #333;
+            margin: 0;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .category-toggle {
+            background-color: transparent;
+            border: none;
+            font-size: 18px;
+            color: #999;
+            cursor: pointer;
+            padding: 4px 8px;
+            margin-left: 15px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+        }
+        
+        .category-header:hover .category-toggle {
+            color: #000;
+        }
+        
+        .category-toggle::before {
+            content: '▼';
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .category-toggle.collapsed::before {
+            content: '▼';
+            transform: rotate(-180deg);
+        }
+        
+        .category-content {
+            transition: all 0.3s ease-out;
+            overflow: visible;
+            max-height: none;
+            opacity: 1;
+            transform: translateY(0);
+            margin-bottom: 30px;
+            padding: 0 20px 20px 20px;
+        }
+        
+        .category-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(-10px);
+            margin-top: 0;
+            margin-bottom: 0;
+            padding: 0 20px;
+            overflow: hidden;
+        }
+        
+        .video-button {
+            display: inline-block;
+            background-color: #ff0000;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .video-button:hover {
+            background-color: #cc0000;
+        }
+        
+        .category-content.collapsed .video-grid {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        
+        @media (max-width: 1200px) {
+            .video-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .video-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .video-title {
+                font-size: 16px;
+                font-weight: 500;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 0;
+            }
+            
+            .video-card {
+                margin: 0;
+            }
+            
+            .video-content {
+                padding: 10px;
+            }
+            
+            .video-title {
+                font-size: 15px;
+                font-weight: 500;
+                -webkit-line-clamp: unset;
+                display: block;
+            }
+
+            .category-content {
+                padding: 0 15px 15px 15px;
+            }
+
+            .category-content.collapsed {
+                padding: 0 15px;
+            }
+        }
+
+        .dilemma-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 20px;
+            align-items: start;
+        }
+
+        .dilemma-video {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .dilemma-video iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .dilemma-info {
+            padding: 20px;
+        }
+
+        .dilemma-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .dilemma-date {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .dilemma-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .dilemma-buttons .button {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: transparent;
+            color: #000000;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid #000000;
+            font-size: 14px;
+            white-space: nowrap;
+            margin-bottom: 10px;
+        }
+
+        .dilemma-buttons .button:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .dilemma-buttons .button.secondary {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: transparent;
+            color: #000000;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid #000000;
+            font-size: 14px;
+            white-space: nowrap;
+            margin-bottom: 10px;
+        }
+
+        .dilemma-buttons .button.secondary:hover {
+            background-color: #000;
+            color: #fff;
+        }
+
+        @media (max-width: 900px) {
+            .dilemma-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 15px;
+            }
+            
+            .dilemma-info {
+                padding: 15px;
+            }
+            
+            .dilemma-description {
+                font-size: 15px;
+                margin-bottom: 20px;
+            }
+            
+            .dilemma-buttons {
+                gap: 10px;
+            }
+            
+            .dilemma-buttons .button,
+            .dilemma-buttons .button.secondary {
+                font-size: 13px;
+                padding: 6px 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .dilemma-container {
+                padding: 10px;
+            }
+            
+            .dilemma-info {
+                padding: 10px;
+            }
+            
+            .dilemma-description {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+            
+            .dilemma-buttons {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .dilemma-buttons .button,
+            .dilemma-buttons .button.secondary {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        .channel-section {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .channel-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .channel-content h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .channel-content p {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: #666;
+            font-weight: 300;
+        }
+
+        .channel-button {
+            display: inline-block;
+            background-color: transparent;
+            color: #FB7299;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid #FB7299;
+            font-size: 14px;
+        }
+
+        .channel-button:hover {
+            background-color: #FB7299;
+            color: white;
+        }
+
+        .channel-image {
+            width: 320px;
+            height: 180px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        }
+
+        .channel-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .channel-section {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+            
+            .channel-image {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 16/9;
+            }
+            
+            .channel-content h2 {
+                font-size: 20px;
+            }
+            
+            .channel-content p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <a href="../index.html"><img class="nav-logo" src="../img/happylogo.png" width="50px"></a>
+        <ul>
+            <li><a href="../index.html#about">About</a></li>
+            <li><a href="videos.html">Videos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </div>
+    
+    <div class="links-container">
+        <h1>Filmmaking Portfolio</h1>
+        
+        <div class="category-section">
+            <div class="category-header" onclick="toggleCategory('dilemma')">
+                <h2 class="category-heading">
+                    The Dilemma: Extra-Curricular Institutions in China
+                    <button class="category-toggle" id="dilemma-toggle"></button>
+                </h2>
+            </div>
+            <div class="category-content" id="dilemma-content">
+                <div class="dilemma-container">
+                    <div class="dilemma-video">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/ConzLJe7Svs?si=huJPe_l-Yq71rwsA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="dilemma-info">
+                        <p class="dilemma-description">
+                            A 15-minute documentary I independently produced, exploring the rise and controversy of China's cram school system through 11 in-depth interviews. Official selected by the 45th Mill Valley Film Festival and 10 other International Film Festivals.
+                        </p>
+                        <p class="dilemma-date">January 29, 2022</p>
+                        <div class="dilemma-buttons">
+                            <a href="https://www.youtube.com/watch?v=5e5XwLehZ8Y" target="_blank" class="button secondary">Watch Full Film →</a>
+                            <a href="https://www.imdb.com/title/tt21827460/" target="_blank" class="button secondary">IMDB Page →</a>
+                            <a href="https://www.cmrubinworld.com/the-global-search-for-education-a-conversation-with-the-dilemma-director-huanshuo-wang/" target="_blank" class="button secondary">Read Interview →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header" onclick="toggleCategory('school')">
+                <h2 class="category-heading">
+                    School Projects
+                    <button class="category-toggle" id="school-toggle"></button>
+                </h2>
+            </div>
+            <div class="category-content" id="school-content">
+                <div class="video-grid">
+                    <a href="https://www.youtube.com/watch?v=p59tW5UmDeU" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="img/wrongnumber.jpeg" alt="Wrong Number!">
+                        <div class="video-content">
+                            <h2 class="video-title">Wrong Number!</h2>
+                            <p class="video-contribution">Sound, Editing</p>
+                            <p class="video-date">April 28, 2024 - USC Course CTPR 385</p>
+                        </div>
+                    </a>
+                    
+                    <a href="https://www.youtube.com/watch?v=FQdhYN_Ecec" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="https://img.youtube.com/vi/FQdhYN_Ecec/maxresdefault.jpg" alt="Coverage Project - Everything Everywhere All At Once">
+                        <div class="video-content">
+                            <h2 class="video-title">Coverage Project: Everything Everywhere All At Once</h2>
+                            <p class="video-contribution">Script Adaptation, Casting, Camera Operating, Directing, Editing</p>
+                            <p class="video-date">February 21, 2024 - USC Course CTPR 385</p>
+                        </div>
+                    </a>
+
+                    <a href="https://www.youtube.com/watch?v=-fP41YDSD2g" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="https://img.youtube.com/vi/-fP41YDSD2g/maxresdefault.jpg" alt="Attraction">
+                        <div class="video-content">
+                            <h2 class="video-title">Attraction</h2>
+                            <p class="video-contribution">Independent Production: Script, Casting, Directing, Camera Operating, Editing</p>
+                            <p class="video-date">July 13, 2023 - NYU Tisch Summer High School Filmmakers Workshop 2022</p>
+                        </div>
+                    </a>
+                    
+                    <a href="https://youtu.be/tAkKasjn-Ls" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="https://img.youtube.com/vi/tAkKasjn-Ls/maxresdefault.jpg" alt="Bird Explorer">
+                        <div class="video-content">
+                            <h2 class="video-title">Bird Explorer<br>观鸟记：这深中河里吗？</h2>
+                            <p class="video-contribution">Directing, Producing, Filming, Editing, Animation</p>
+                            <p class="video-date">May 22, 2021 - Shenzhen Middle School</p>
+                        </div>
+                    </a>
+
+                    <a href="https://www.bilibili.com/video/BV1qz4y1q78t/?share_source=copy_web&vd_source=57162e21ac79aed20e003b7bfa4207af" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="img/2023 send-off.jpeg" alt="Shenzhen Middle School 2022 Gaokao Send-off Video">
+                        <div class="video-content">
+                            <h2 class="video-title">2023 Gaokao Send-off Video<br>2023，一马当先；深中少年，顶峰相见！</h2>
+                            <p class="video-contribution">Asset Coordination, Editing</p>
+                            <p class="video-date">June 4, 2023 - Shenzhen Middle School</p>
+                        </div>
+                    </a>
+
+                    <a href="https://www.bilibili.com/video/BV1NV4y1H71N/?share_source=copy_web&vd_source=57162e21ac79aed20e003b7bfa4207af" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="img/Hamlet.jpeg" alt="Hamlet Act 3 & 4 Scene Recreation">
+                        <div class="video-content">
+                            <h2 class="video-title">Hamlet Act 3 & 4 Scene Recreation<br>我在深中（十六）｜英语期末大作业，不要点进来</h2>
+                            <p class="video-contribution">Directing, Acting, Editing</p>
+                            <p class="video-date">July 13, 2022 - Shenzhen Middle School</p>
+                        </div>
+                    </a>
+
+                    <a href="https://www.bilibili.com/video/BV1SL41147ZM/?p=2&share_source=copy_web&vd_source=57162e21ac79aed20e003b7bfa4207af" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="img/ACES 2021 recruitment.jpeg" alt="2021 ACES Recruitment Video">
+                        <div class="video-content">
+                            <h2 class="video-title">Club Recruitment Video<br>ACES｜2021年招新宣传视频</h2>
+                            <p class="video-contribution">Script, Casting, Directing, Camera Operation, Editing</p>
+                            <p class="video-date">September 6, 2021 - Shenzhen Middle School</p>
+                        </div>
+                    </a>
+
+                    <a href="https://www.bilibili.com/video/BV13b4y1U7En/?share_source=copy_web&vd_source=57162e21ac79aed20e003b7bfa4207af" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="img/ACES 2021 orientation.jpeg" alt="2021 Freshmen Orientation Recap">
+                        <div class="video-content">
+                            <h2 class="video-title">Freshmen Orientation Recap<br>ACES｜2021级新生入学教育全记录</h2>
+                            <p class="video-contribution">Producing, Directing, Camera Operation</p>
+                            <p class="video-date">September 4, 2021 - Shenzhen Middle School</p>
+                        </div>
+                    </a>
+
+                    <a href="https://www.bilibili.com/video/BV1Bg411u7dF/?share_source=copy_web&vd_source=57162e21ac79aed20e003b7bfa4207af" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="img/badminton.jpeg" alt="2021 Badminton Competition ACES">
+                        <div class="video-content">
+                            <h2 class="video-title">Badminton Competition Recap<br>ACES｜2021凤翎杯羽毛球赛</h2>
+                            <p class="video-contribution">Producing, Camera Operation, Editing</p>
+                            <p class="video-date">July 10, 2023 - Shenzhen Middle School</p>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="category-section">
+            <div class="category-header" onclick="toggleCategory('viterbi')">
+                <h2 class="category-heading">
+                    Video Editor: USC Viterbi School of Engineering
+                    <button class="category-toggle" id="viterbi-toggle"></button>
+                </h2>
+            </div>
+            <div class="category-content" id="viterbi-content">
+                <div class="video-grid">
+                    <a href="https://www.youtube.com/watch?v=uIY74A5T2Ls" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="https://img.youtube.com/vi/uIY74A5T2Ls/hqdefault.jpg" alt="2024 Year in Review">
+                        <div class="video-content">
+                            <h2 class="video-title">2024 Year in Review</h2>
+                            <p class="video-contribution">Asset Coordination</p>
+                            <p class="video-date">April 24, 2025</p>
+                        </div>
+                    </a>
+
+                    <a href="https://www.youtube.com/watch?v=eh5y7kuiQ_w" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="https://img.youtube.com/vi/eh5y7kuiQ_w/hqdefault.jpg" alt="2025 Viterbi Awards: Maseeh Entrepreneurship Prize Competition">
+                        <div class="video-content">
+                            <h2 class="video-title">2025 Viterbi Awards: Maseeh Entrepreneurship Prize Competition</h2>
+                            <p class="video-contribution">Asset Coordination, Camera Operation, Editing</p>
+                            <p class="video-date">April 24, 2025</p>
+                        </div>
+                    </a>
+ 
+                    <a href="https://www.youtube.com/watch?v=XKZfvOl_mBw" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="https://img.youtube.com/vi/XKZfvOl_mBw/hqdefault.jpg" alt="2025 Viterbi Awards: Min Family Challenge">
+                        <div class="video-content">
+                            <h2 class="video-title">2025 Viterbi Awards: Min Family Challenge</h2>
+                            <p class="video-contribution">Asset Coordination, Camera Operation, Editing</p>
+                            <p class="video-date">April 24, 2025</p>
+                        </div>
+                    </a>
+ 
+                    <a href="https://www.youtube.com/watch?v=0ThG3ez1TJc" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="https://img.youtube.com/vi/0ThG3ez1TJc/maxresdefault.jpg" alt="USC Viterbi in Space: Celebrating the 20th Anniversary of ASTE and RPL">
+                        <div class="video-content">
+                            <h2 class="video-title">USC Viterbi in Space: Celebrating the 20th Anniversary of ASTE and RPL</h2>
+                            <p class="video-contribution">Asset Coordination, Camera Operation</p>
+                            <p class="video-date">February 21, 2025</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header" onclick="toggleCategory('personal')">
+                <h2 class="category-heading">
+                    Personal Production
+                    <button class="category-toggle" id="personal-toggle"></button>
+                </h2>
+            </div>
+            <div class="category-content" id="personal-content">
+                <div class="channel-section">
+                    <div class="channel-content">
+                        <h2>Bilibili Channel @神奇大人</h2>
+                        <p>This video channel features all my personal productions since 2018, highlighting my travels, school life, and creative journey.</p>
+                        <a href="https://space.bilibili.com/135346247" target="_blank" class="channel-button">Visit Bilibili →</a>
+                    </div>
+                    <div class="channel-image">
+                        <img src="img/bilibili.jpeg" alt="Bilibili Channel">
+                    </div>
+                </div>
+                <div class="video-grid">
+                    <a href="https://youtu.be/LI30DdAYhXM?si=fCPS6BWc-Ob2dhuG" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="https://img.youtube.com/vi/LI30DdAYhXM/maxresdefault.jpg" alt="Introduction Video">
+                        <div class="video-content">
+                            <h2 class="video-title">10 Fun Facts About Happy Wang</h2>
+                            <p class="video-date">February 8, 2025</p>
+                        </div>
+                    </a>
+                    
+                    <a href="https://www.youtube.com/watch?v=wLAbLWo7IUg" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="https://img.youtube.com/vi/wLAbLWo7IUg/maxresdefault.jpg" alt="Alaska Travel Diary">
+                        <div class="video-content">
+                            <h2 class="video-title">Alaska Travel Diary | 阿拉斯加7日旅行日记｜白色圣诞节，极地松林和极光</h2>
+                            <p class="video-date">January 30, 2024</p>
+                        </div>
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="copyright">
+        <p>Copyright © 2025 Huanshuo (Happy) Wang. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        function toggleCategory(categoryId) {
+            const content = document.getElementById(`${categoryId}-content`);
+            const toggle = document.getElementById(`${categoryId}-toggle`);
+            
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                toggle.classList.remove('collapsed');
+            } else {
+                content.classList.add('collapsed');
+                toggle.classList.add('collapsed');
+            }
+        }
+    </script>
+</body>
+</html> 
