@@ -17,29 +17,25 @@
 
     <script>
         const resources = [
-            'index.html',
-            'css/stylesheet.css',
-            'pages/css/style.css',
-            'img/happylogo.png',
-            'img/happylogonav.png',
-            'img/happyface-01.png',
-            'img/happyface-02.png',
-            'img/happyface-03.png',
-            'img/happyface-04.png',
-            'img/happyface-05.png',
-            'img/happyface-06.png',
-            'img/happyface-07.png',
-            'img/happywang.jpeg',
-            'pages/img/filmmaking portfolio.png',
-            'pages/img/bilibili.png',
-            'fonts/Chillen.ttf',
-            'fonts/SF-Pro.ttf',
-            'fonts/Washington.ttf',
-            'fonts/Sequel_Demo.ttf',
-            'js/script.js'
+            { url: 'index.html', type: 'fetch' },
+            { url: 'css/stylesheet.css', type: 'fetch' },
+            { url: 'pages/css/style.css', type: 'fetch' },
+            { url: 'img/happylogo.png', type: 'image' },
+            { url: 'img/happylogonav.png', type: 'image' },
+            { url: 'img/happyface-01.png', type: 'image' },
+            { url: 'img/happyface-02.png', type: 'image' },
+            { url: 'img/happyface-03.png', type: 'image' },
+            { url: 'img/happyface-04.png', type: 'image' },
+            { url: 'img/happyface-05.png', type: 'image' },
+            { url: 'img/happyface-06.png', type: 'image' },
+            { url: 'img/happyface-07.png', type: 'image' },
+            { url: 'img/happywang.jpeg', type: 'image' },
+            { url: 'pages/img/filmmaking portfolio.png', type: 'image' },
+            { url: 'pages/img/bilibili.jpeg', type: 'image' },
+            { url: 'js/script.js', type: 'fetch' }
         ];
 
-        // Load fonts first
+        // Load fonts
         const fonts = [
             new FontFace('Chillen', 'url(fonts/Chillen.ttf)'),
             new FontFace('sfpro', 'url(fonts/SF-Pro.ttf)'),
@@ -50,6 +46,12 @@
         let loadedResources = 0;
         const totalResources = resources.length + fonts.length;
         const progressBar = document.getElementById('progressBar');
+        let redirectTimeout;
+        
+        // Set a timeout to redirect after 6 seconds regardless of loading status
+        redirectTimeout = setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 6000);
         
         // Load fonts
         Promise.all(fonts.map(font => font.load().then(f => document.fonts.add(f))))
@@ -57,23 +59,38 @@
                 loadedResources += fonts.length;
                 updateProgress();
             })
-            .catch(error => console.error('Error loading fonts:', error));
+            .catch(error => {
+                console.error('Error loading fonts:', error);
+                loadedResources += fonts.length;
+                updateProgress();
+            });
 
         // Load other resources
         resources.forEach(resource => {
-            const link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = resource;
-            link.onload = () => {
-                loadedResources++;
-                updateProgress();
-            };
-            link.onerror = () => {
-                console.error('Error loading resource:', resource);
-                loadedResources++;
-                updateProgress();
-            };
-            document.head.appendChild(link);
+            if (resource.type === 'image') {
+                const img = new Image();
+                img.onload = () => {
+                    loadedResources++;
+                    updateProgress();
+                };
+                img.onerror = () => {
+                    console.error('Error loading image:', resource.url);
+                    loadedResources++;
+                    updateProgress();
+                };
+                img.src = resource.url;
+            } else if (resource.type === 'fetch') {
+                fetch(resource.url)
+                    .then(() => {
+                        loadedResources++;
+                        updateProgress();
+                    })
+                    .catch(error => {
+                        console.error('Error loading resource:', resource.url, error);
+                        loadedResources++;
+                        updateProgress();
+                    });
+            }
         });
 
         function updateProgress() {
@@ -81,6 +98,8 @@
             progressBar.style.width = progress + '%';
             
             if (loadedResources >= totalResources) {
+                // Clear the timeout since we're redirecting now
+                clearTimeout(redirectTimeout);
                 setTimeout(() => {
                     window.location.href = 'index.html';
                 }, 500);
