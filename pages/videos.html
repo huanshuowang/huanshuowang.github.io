@@ -8,6 +8,13 @@
     <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <style>
+        .inline-logo {
+            height: 24px;
+            width: auto;
+            margin-bottom: 5px;
+            vertical-align: middle;
+            margin-left: 3px;
+        }
         .video-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -52,6 +59,7 @@
             color: #000;
             line-height: 1.4;
             display: -webkit-box;
+            line-clamp: 3;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
@@ -211,6 +219,7 @@
             .video-title {
                 font-size: 15px;
                 font-weight: 500;
+                line-clamp: unset;
                 -webkit-line-clamp: unset;
                 display: block;
             }
@@ -398,18 +407,18 @@
         .channel-button {
             display: inline-block;
             background-color: transparent;
-            color: #FB7299;
+            color: #009fd6;
             padding: 8px 16px;
             border-radius: 4px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
-            border: 2px solid #FB7299;
+            border: 2px solid #009fd6;
             font-size: 14px;
         }
 
         .channel-button:hover {
-            background-color: #FB7299;
+            background-color: #009fd6;
             color: white;
         }
 
@@ -455,7 +464,7 @@
         <a href="../index.html"><img class="nav-logo" src="../img/happylogo.png" width="50px"></a>
         <ul>
             <li><a href="../index.html#about">About</a></li>
-            <li><a href="videos.html">Videos</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
     </div>
@@ -466,7 +475,7 @@
         <div class="category-section">
             <div class="category-header" onclick="toggleCategory('dilemma')">
                 <h2 class="category-heading">
-                    The Dilemma: Extra-Curricular Institutions in China
+                   The Dilemma: Extra-Curricular Institutions in China
                     <button class="category-toggle" id="dilemma-toggle"></button>
                 </h2>
             </div>
@@ -586,6 +595,45 @@
         
 
         <div class="category-section">
+            <div class="category-header" onclick="toggleCategory('personal')">
+                <h2 class="category-heading">
+                    Personal Production
+                    <button class="category-toggle" id="personal-toggle"></button>
+                </h2>
+            </div>
+            <div class="category-content" id="personal-content">
+                <div class="channel-section">
+                    <div class="channel-content">
+                        <h2><img src="img/Bilibililogo.png" alt="Bilibili logo" class="inline-logo"> Video Channel @神奇大人</h2>
+                        <p>This video channel features all my personal productions since 2018, highlighting my travels, school life, and creative journey.</p>
+                        <a href="https://space.bilibili.com/135346247" target="_blank" class="channel-button">Visit Bilibili →</a>
+                    </div>
+                    <div class="channel-image">
+                        <img src="img/bilibili.jpeg" alt="Bilibili Channel">
+                    </div>
+                </div>
+                <div class="video-grid">
+                    <a href="https://youtu.be/LI30DdAYhXM?si=fCPS6BWc-Ob2dhuG" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="https://img.youtube.com/vi/LI30DdAYhXM/maxresdefault.jpg" alt="Introduction Video">
+                        <div class="video-content">
+                            <h2 class="video-title">10 Fun Facts About Happy Wang</h2>
+                            <p class="video-date">February 8, 2025</p>
+                        </div>
+                    </a>
+                    
+                    <a href="https://www.youtube.com/watch?v=wLAbLWo7IUg" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="https://img.youtube.com/vi/wLAbLWo7IUg/maxresdefault.jpg" alt="Alaska Travel Diary">
+                        <div class="video-content">
+                            <h2 class="video-title">Alaska Travel Diary | 阿拉斯加7日旅行日记｜白色圣诞节，极地松林和极光</h2>
+                            <p class="video-date">January 30, 2024</p>
+                        </div>
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
             <div class="category-header" onclick="toggleCategory('viterbi')">
                 <h2 class="category-heading">
                     Video Editor: USC Viterbi School of Engineering
@@ -594,6 +642,15 @@
             </div>
             <div class="category-content" id="viterbi-content">
                 <div class="video-grid">
+                    <a href="https://www.youtube.com/watch?v=bEGTGDpkfg4" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="https://img.youtube.com/vi/bEGTGDpkfg4/hqdefault.jpg" alt="2025 Viterbi Awards: Min Family Challenge">
+                        <div class="video-content">
+                            <h2 class="video-title">USC Viterbi Launches School of Advanced Computing</h2>
+                            <p class="video-contribution">Asset Coordination, Prodction Assitant</p>
+                            <p class="video-date">August 21, 2025</p>
+                        </div>
+                    </a>
+
                     <a href="https://www.youtube.com/watch?v=uIY74A5T2Ls" target="_blank" class="video-card">
                         <img class="video-thumbnail" src="https://img.youtube.com/vi/uIY74A5T2Ls/hqdefault.jpg" alt="2024 Year in Review">
                         <div class="video-content">
@@ -629,45 +686,6 @@
                             <p class="video-date">February 21, 2025</p>
                         </div>
                     </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="category-section">
-            <div class="category-header" onclick="toggleCategory('personal')">
-                <h2 class="category-heading">
-                    Personal Production
-                    <button class="category-toggle" id="personal-toggle"></button>
-                </h2>
-            </div>
-            <div class="category-content" id="personal-content">
-                <div class="channel-section">
-                    <div class="channel-content">
-                        <h2>Bilibili Channel @神奇大人</h2>
-                        <p>This video channel features all my personal productions since 2018, highlighting my travels, school life, and creative journey.</p>
-                        <a href="https://space.bilibili.com/135346247" target="_blank" class="channel-button">Visit Bilibili →</a>
-                    </div>
-                    <div class="channel-image">
-                        <img src="img/bilibili.jpeg" alt="Bilibili Channel">
-                    </div>
-                </div>
-                <div class="video-grid">
-                    <a href="https://youtu.be/LI30DdAYhXM?si=fCPS6BWc-Ob2dhuG" target="_blank" class="video-card">
-                        <img class="video-thumbnail" src="https://img.youtube.com/vi/LI30DdAYhXM/maxresdefault.jpg" alt="Introduction Video">
-                        <div class="video-content">
-                            <h2 class="video-title">10 Fun Facts About Happy Wang</h2>
-                            <p class="video-date">February 8, 2025</p>
-                        </div>
-                    </a>
-                    
-                    <a href="https://www.youtube.com/watch?v=wLAbLWo7IUg" target="_blank" class="video-card">
-                        <img class="video-thumbnail" src="https://img.youtube.com/vi/wLAbLWo7IUg/maxresdefault.jpg" alt="Alaska Travel Diary">
-                        <div class="video-content">
-                            <h2 class="video-title">Alaska Travel Diary | 阿拉斯加7日旅行日记｜白色圣诞节，极地松林和极光</h2>
-                            <p class="video-date">January 30, 2024</p>
-                        </div>
-                    </a>
-                    
                 </div>
             </div>
         </div>
