@@ -150,6 +150,76 @@
             color: #000000;
             text-decoration: underline;
         }
+        
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            .work-item {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .work-logo {
+                height: 80px;
+                width: 80px;
+            }
+            
+            .work-content {
+                text-align: center;
+            }
+            
+            .work-company {
+                font-size: 20px;
+            }
+            
+            .work-time {
+                font-size: 13px;
+            }
+            
+            .work-description {
+                font-size: 15px;
+            }
+            
+            .category-heading {
+                font-size: 20px;
+            }
+            
+            .links-container h1 {
+                font-size: 48px;
+            }
+            
+            .contact-container h1 {
+                font-size: 48px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .work-logo {
+                height: 60px;
+                width: 60px;
+            }
+            
+            .work-company {
+                font-size: 18px;
+            }
+            
+            .work-description {
+                font-size: 14px;
+            }
+            
+            .category-heading {
+                font-size: 18px;
+            }
+            
+            .links-container h1 {
+                font-size: 40px;
+            }
+            
+            .contact-container h1 {
+                font-size: 40px;
+            }
+        }
     </style>
     <style>
         /* Speed up card appearance only on the portfolio page */
