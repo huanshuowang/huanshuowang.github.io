@@ -209,8 +209,8 @@ p{
 }
 
 .content-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
 }
 
 .content-card:nth-child(1) {
@@ -279,6 +279,8 @@ p{
     background-color: #000000 !important;
     color: #ffffff !important;
     border-color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
 }
 
 .card-links {
@@ -558,12 +560,14 @@ p{
     text-decoration: none;
     font-weight: 500;
     font-size: 14px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
     margin: 0 auto;
 }
 
 .card-button:hover {
-    background-color: #F5C500;
+    background-color: #e6b800;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(245, 197, 0, 0.5);
 }
 
 /* Override the content-description a styles for card buttons */
@@ -631,13 +635,18 @@ p{
     border-radius: 8px;
     overflow: visible;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
     cursor: pointer;
     text-decoration: none;
     color: inherit;
     display: block;
     margin: 10px;
-    min-width: 0; /* Add this to allow text truncation */
+    min-width: 0;
+}
+
+.video-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.2);
 }
 
 .video-content {

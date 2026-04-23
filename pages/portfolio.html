@@ -220,8 +220,6 @@
                 font-size: 40px;
             }
         }
-    </style>
-    <style>
         /* Speed up card appearance only on the portfolio page */
         .links-container .content-card { animation-delay: 0.1s !important; }
         .links-container .content-card:nth-child(2) { animation-delay: 0.2s !important; }
@@ -324,6 +322,24 @@
             <div class="category-content" id="work-content">
                 <div><br></div>
                 <div class="work-item">
+                    <img src="img/tiktoklogo.png" alt="TikTok" class="work-logo">
+                    <div class="work-content">
+                        <div class="work-company"><a href="https://www.tiktok.com/about?lang=en" target="_blank">TikTok</a> <span class="work-position" target="_blank">| User Product Operations Intern</span></div>
+                        <div class="work-time">March 2026-Present</div>
+                        <div class="work-description">I help small and medium businesses grow on TikTok LIVE — supporting initiatives around the Service+ feature and livestream performance to turn audiences into clients..</div>
+                    </div>
+                </div>
+                
+                <div class="work-item">
+                    <img src="img/ramolawlogo.png" alt="Ramo Law" class="work-logo">
+                    <div class="work-content">
+                        <div class="work-company"><a href="https://ramolaw.com/" target="_blank">Ramo Law</a> <span class="work-position">| Marketing Intern</span></div>
+                        <div class="work-time">January 2026-March 2026</div>
+                        <div class="work-description">The only entertainment law firm with its own Packaging & Sales team, where I helped with their marketing!<br>
+                            I run social campaigns, benchmark competitors, and track the awards, festivals, and industry news that shape the firm's reputation and connect with our clients better.</div>
+                    </div>
+                </div>
+                <div class="work-item">
                     <img src="img/USCViterbilogo.png" alt="USC Viterbi" class="work-logo">
                     <div class="work-content">
                         <div class="work-company"><a href="https://viterbischool.usc.edu/" target="_blank">USC Viterbi School's Office of Communications & Marketing</a> <span class="work-position" target="_blank">| Video Editor</span></div>
@@ -375,7 +391,7 @@
                     <img src="img/MEAlogo.png" alt="USC Marshall Entertainment Association" class="work-logo">
                     <div class="work-content">
                         <div class="work-company"><a href="https://www.instagram.com/uscmea/" target="_blank">USC Marshall Entertainment Association (MEA)</a> <span class="work-position">| Co-Vice President of Social Media/Communications</span></div>
-                        <div class="work-time">September 2023 - Present</div>
+                        <div class="work-time">September 2023 - May 2026</div>
                         <div class="work-description">I help connect Trojans who share a love for the intersection of business and entertainment through creative storytelling and design.</div>
                     </div>
                 </div>
@@ -393,9 +409,9 @@
                 <div class="work-item">
                     <img src="img/Annenbergmedialogo.png" alt="USC Annenberg Media" class="work-logo">
                     <div class="work-content">
-                        <div class="work-company"><a href="https://www.uscannenbergmedia.com/" target="_blank">USC Annenberg Media</a> <span class="work-position">| Contributor, Mandarin desk (Xiaohongshu)</span></div>
+                        <div class="work-company"><a href="https://www.uscannenbergmedia.com/" target="_blank">USC Annenberg Media</a> <span class="work-position">| Writer & Photographer, Mandarin desk (Xiaohongshu)</span></div>
                         <div class="work-time">September 2025 – Present</div>
-                        <div class="work-description"><a href="https://www.xiaohongshu.com/discovery/item/68d1ee37000000000702a4ed?source=webshare&xhsshare=pc_web&xsec_token=ABT50spe0y1AbXsymps0mJFCFYezRsRT4iA6lJEPkuPeQ=&xsec_source=pc_share" target="_blank">Write</a>, Write, Write!</div>
+                        <div class="work-description"><a href="https://www.xiaohongshu.com/discovery/item/699a6500000000001a023ecf?secondshare=weixin&share_from_user_hidden=true&appuid=&apptime=1776874577&share_id=eb75da2f7b53429196e3808539b2fd52&xsec_source=h5_share&xsec_token=CBt4_Hp6ipvrGo-MCDoIFkFbndcGDwSaTn418WaJAOmMg%3D" target="_blank">Write</a>, Write, Write!</div>
                     </div>
                 </div>
                 
@@ -423,7 +439,7 @@
                 <div class="work-item">
                     <img src="img/questlogo.png" alt="Quest Program" class="work-logo">
                     <div class="work-content">
-                        <div class="work-company">Quest Program 奇旅计划 <span class="work-position">| Co-Founder, Social Media Manager & Speaker</span></div>
+                        <div class="work-company"><a href="https://www.linkedin.com/company/questprogram" target="_blank">Quest 奇旅计划</a> <span class="work-position">| Co-Founder, Social Media Manager & Speaker</span></div>
                         <div class="work-time">2023</div>
                         <div class="work-description">I co-founded an educational consulting program to support Chinese international students through workshops and mentorship. We connected with 100+ students and recruited 10+ speakers and instructors, combining storytelling, community, and design to make education more easy.</div>
                     </div>
@@ -433,14 +449,13 @@
     </div>
 
     <footer class="copyright">
-        <p>Copyright © 2025 Huanshuo (Happy) Wang. All rights reserved.</p>
+        <p>Copyright © 2026 Huanshuo (Happy) Wang. All rights reserved.</p>
     </footer>
-    
+
     <script>
         function toggleCategory(categoryId) {
             const content = document.getElementById(`${categoryId}-content`);
             const toggle = document.getElementById(`${categoryId}-toggle`);
-            
             if (content.classList.contains('collapsed')) {
                 content.classList.remove('collapsed');
                 toggle.classList.remove('collapsed');
@@ -450,6 +465,7 @@
             }
         }
     </script>
+
 </body>
 </html>
 

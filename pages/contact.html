@@ -48,7 +48,18 @@
         </div>
     </div>
     <footer class="copyright">
-        <p>Copyright © 2025 Huanshuo (Happy) Wang. All rights reserved.</p>
+        <p>Copyright © 2026 Huanshuo (Happy) Wang. All rights reserved.</p>
     </footer>
+
+    <script>
+        const hoverSound = new Audio('img/tunetank.com_menu-interface-selection.wav');
+        hoverSound.volume = 0.5;
+        document.querySelectorAll('.contact-item').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                hoverSound.currentTime = 0;
+                hoverSound.play().catch(() => {});
+            });
+        });
+    </script>
 </body>
 </html>
