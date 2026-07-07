@@ -220,6 +220,90 @@
                 font-size: 40px;
             }
         }
+        /* ---- "Projects by Happy" feature card (breaks the usual card rules) ---- */
+        .pbh-card {
+            display: block;
+            position: relative;
+            text-decoration: none;
+            color: #101418;
+            background-color: #ffffff;
+            background-image: radial-gradient(circle at 1px 1px, rgba(16,20,24,0.055) 1px, transparent 0);
+            background-size: 22px 22px;
+            border: 1px solid #e7e9ee;
+            border-radius: 16px;
+            padding: 48px 46px;
+            margin-bottom: 40px;
+            overflow: hidden;
+            text-align: center;
+            transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+        }
+
+        .pbh-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 5px;
+            background: #e8552d;
+        }
+
+        .pbh-card:hover {
+            transform: translateY(-6px);
+            border-color: #e8552d;
+            box-shadow: 0 22px 50px -24px rgba(232,85,45,0.55);
+        }
+
+        .pbh-brand {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            margin-bottom: 14px;
+            color: #101418;
+        }
+
+        .pbh-by { color: #9aa1ad; font-weight: 500; }
+        .pbh-dot { color: #e8552d; }
+
+        .pbh-lead {
+            font-size: 17px;
+            line-height: 1.65;
+            color: #5f6672;
+            font-weight: 300;
+            max-width: 640px;
+            margin: 0 auto 26px;
+            text-align: center;
+        }
+
+        .pbh-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #e8552d;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 11px 22px;
+            border-radius: 999px;
+            transition: background .2s ease;
+        }
+
+        .pbh-card:hover .pbh-cta { background: #d3421c; }
+        .pbh-arr { display: inline-block; transition: transform .2s ease; }
+        .pbh-card:hover .pbh-arr { transform: translateX(4px); }
+
+        @media (max-width: 768px) {
+            .pbh-card { padding: 32px 26px; }
+            .pbh-brand { font-size: 32px; }
+            .pbh-lead { font-size: 15px; }
+        }
+
+        @media (max-width: 480px) {
+            .pbh-card { padding: 26px 20px; }
+            .pbh-brand { font-size: 27px; }
+        }
+
         /* Speed up card appearance only on the portfolio page */
         .links-container .content-card { animation-delay: 0.1s !important; }
         .links-container .content-card:nth-child(2) { animation-delay: 0.2s !important; }
@@ -251,6 +335,12 @@
             </div>
             <div class="category-content" id="creative-content">
                 <div class="content-cards" id="content-cards">
+                    <a class="pbh-card" href="../projects-by-happy/index.html" target="_blank">
+                        <div class="pbh-brand">Projects <span class="pbh-by">by</span> Happy<span class="pbh-dot">.</span></div>
+                        <p class="pbh-lead">Some fun things and ideas — a home for everything I've built, useful or just fun, with the thinking behind each one. Because the meaning of life is to think and tinker!</p>
+                        <span class="pbh-cta">Explore Projects by Happy <span class="pbh-arr">→</span></span>
+                    </a>
+
                     <div class="content-card">
                         <div class="content-description">
                             <h2>Ride with Happy</h2>
