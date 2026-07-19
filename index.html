@@ -7,7 +7,23 @@
         <link rel="icon" type="image/png" href="img/happylogonav.png">
         <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
         <link rel="stylesheet" type="text/css" href="pages/css/style.css">
-        <script src="js/loading-redirect.js"></script>
+        <style>
+            /* 首页卡片改为滚动触发入场（覆盖 pages/css/style.css 里按时间计时的 fadeInUp 延迟）。
+               隐藏态挂在 :not(.in) 上，入场后不再干预 transform，避免压过 hover 上浮 */
+            #content-cards .content-card {
+                animation: none;
+                opacity: 1;
+                transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1), transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+                            box-shadow 0.3s ease;
+            }
+            #content-cards .content-card:not(.in) {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            @media (prefers-reduced-motion: reduce) {
+                #content-cards .content-card:not(.in) { transform: none; }
+            }
+        </style>
     </head>
     <body>
         <div id="navbar">
@@ -148,9 +164,36 @@
                 requestAnimationFrame(animate);
             }
             animate();
+            const rmq = window.matchMedia('(prefers-reduced-motion: reduce)');
             window.siteFireworks = function(x, y, n) {
+                if (rmq.matches) return; // 尊重系统「减弱动态效果」设置
                 for (let i = 0; i < (n || 50); i++) particles.push(new Particle(x, y));
             };
+        })();
+        </script>
+        <script>
+        // 首页卡片：进入视口才播放入场（含 60ms stagger）
+        (function () {
+            const cards = document.querySelectorAll('#content-cards .content-card');
+            if (!('IntersectionObserver' in window)) {
+                cards.forEach(c => c.classList.add('in'));
+                return;
+            }
+            const io = new IntersectionObserver((entries) => {
+                entries.filter(e => e.isIntersecting).forEach((e, i) => {
+                    const card = e.target;
+                    card.style.transitionDelay = (Math.min(i, 4) * 60) + 'ms';
+                    card.classList.add('in');
+                    io.unobserve(card);
+                    // 入场结束后清掉 stagger 延迟，避免影响之后的 hover 过渡
+                    card.addEventListener('transitionend', function done(ev) {
+                        if (ev.target !== card || ev.propertyName !== 'opacity') return;
+                        card.style.transitionDelay = '';
+                        card.removeEventListener('transitionend', done);
+                    });
+                });
+            }, { threshold: 0.1 });
+            cards.forEach(c => io.observe(c));
         })();
         </script>
         <script>
@@ -232,7 +275,11 @@
                 const greeting = document.querySelector('#intro h1');
                 if (greeting) {
                     greeting.style.cursor = 'default';
+                    let lastBurst = 0; // 冷却：鼠标反复扫过时不要连环放烟花
                     greeting.addEventListener('mouseenter', function() {
+                        const now = Date.now();
+                        if (now - lastBurst < 1200) return;
+                        lastBurst = now;
                         const r = greeting.getBoundingClientRect();
                         const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
                         siteFireworks(cx, cy, 55);

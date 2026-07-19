@@ -31,9 +31,15 @@
     height: 100%;
 }
 
-.link-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+@media (hover: hover) and (pointer: fine) {
+    .link-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .link-card:hover .link-button {
+        background-color: #3498db;
+    }
 }
 
 .link-image {
@@ -71,12 +77,8 @@
     padding: 6px 12px;
     border-radius: 6px;
     font-weight: 500;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 160ms ease;
     font-size: 13px;
-}
-
-.link-card:hover .link-button {
-    background-color: #3498db;
 }
 
 /* Responsive styles */

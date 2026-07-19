@@ -28,6 +28,10 @@
 }
 
 /* Global Styles */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: #f5f5f5;
     color: #333333;
@@ -130,39 +134,40 @@ h2 {
     color: #F5C500;
 }
 
+/* 整条时间线比旧版提前 0.9s：首个「Happy Wang」和 intro 行几乎同时出现，避免访客还没看到名字就滑走 */
 .adjective:nth-child(1) {
     animation: slideIn 1s forwards, slideOut 1s forwards;
-    animation-delay: 1.5s, 3s;
+    animation-delay: 0.6s, 2.1s;
 }
 
 .adjective:nth-child(2) {
     animation: slideIn 1s forwards, slideOut 1s forwards;
-    animation-delay: 4.5s, 6s;
+    animation-delay: 3.6s, 5.1s;
 }
 
 .adjective:nth-child(3) {
     animation: slideIn 1s forwards, slideOut 1s forwards;
-    animation-delay: 7.5s, 9s;
+    animation-delay: 6.6s, 8.1s;
 }
 
 .adjective:nth-child(4) {
     animation: slideIn 1s forwards, slideOut 1s forwards;
-    animation-delay: 10.5s, 12s;
+    animation-delay: 9.6s, 11.1s;
 }
 
 .adjective:nth-child(5) {
     animation: slideIn 1s forwards, slideOut 1s forwards;
-    animation-delay: 13.5s, 15s;
+    animation-delay: 12.6s, 14.1s;
 }
 
 .adjective:nth-child(6) {
     animation: slideIn 1s forwards, slideOut 1s forwards;
-    animation-delay: 16.5s, 18s;
+    animation-delay: 15.6s, 17.1s;
 }
 
 .adjective:nth-child(7) {
     animation: slideIn 1s forwards;
-    animation-delay: 19.5s;
+    animation-delay: 18.6s;
 }
 
 @keyframes fadeIn {
@@ -321,33 +326,7 @@ h2 {
     opacity: 1;
 }
 
-.happyface-container:hover .happyface:nth-child(1) {
-    opacity: 0;
-}
-
-.happyface-container:hover .happyface:nth-child(2) {
-    opacity: 1;
-}
-
-.happyface-container:hover .happyface:nth-child(3) {
-    opacity: 0;
-}
-
-.happyface-container:hover .happyface:nth-child(4) {
-    opacity: 0;
-}
-
-.happyface-container:hover .happyface:nth-child(5) {
-    opacity: 0;
-}
-
-.happyface-container:hover .happyface:nth-child(6) {
-    opacity: 0;
-}
-
-.happyface-container:hover .happyface:nth-child(7) {
-    opacity: 0;
-}
+/* 换脸逻辑全部由 JS（mouseenter 随机换脸）控制，旧的 :hover 规则会被内联样式覆盖，已清理 */
 
 .spacer {
     height: 25vh;
@@ -415,7 +394,7 @@ a:hover{
     color: #333333;
     text-align: center;
     display: inline-block;
-    transition: all 0.3s ease;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 160ms ease;
     padding: 6px 12px;
     border-radius: 10px;
 }
@@ -483,12 +462,12 @@ a:hover{
     text-decoration: none;
     border-radius: 4px;
     font-weight: 500;
-    transition: all 0.3s ease;
+    transition: background-color 0.2s ease, transform 160ms ease;
     font-size: 16px;
     width: fit-content;
     opacity: 0;
     animation: fadeIn 1s forwards;
-    animation-delay: 4s;
+    animation-delay: 1.2s;
 }
 
 .home-button:hover {
@@ -584,9 +563,11 @@ a:hover{
     animation-delay: 1.6s;
 }
 
-.link-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+@media (hover: hover) and (pointer: fine) {
+    .link-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
 }
 
 .contact-links a {
@@ -613,7 +594,7 @@ a:hover{
     color: #000000;
     padding: 8px 16px;
     font-weight: 500;
-    transition: all 0.3s ease;
+    transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
     font-size: 14px;
     margin: 0;
 }
@@ -643,111 +624,25 @@ a:hover{
     margin: 0;
 }
 
-/* Loading Page Styles */
-.loading-page {
-    background-color: #000;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    font-family: 'sfpro', sans-serif;
-    color: #fff;
-}
-
-.loading-logo-container {
-    width: 200px;
-    height: 200px;
-    margin-bottom: 50px;
-    animation: float 3s ease-in-out infinite;
-}
-
-.loading-logo-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.loading-progress-container {
-    width: 80%;
-    max-width: 500px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-top: 20px;
-}
-
-.loading-progress-bar {
-    width: 0%;
-    height: 10px;
-    background-color: #fff;
-    transition: width 0.3s ease;
-}
-
-@keyframes float {
-    0% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-20px);
-    }
-    100% {
-        transform: translateY(0px);
-    }
-}
-
 .about-text strong {
     font-weight: 500;
 }
 
+/* 卡片入场动画统一由 pages/css/style.css 定义（此处曾有一套重复的 moveUp 延迟规则，会被后加载的样式表覆盖，已清理） */
 .content-card {
     background-color: white;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    opacity: 0;
-    animation: moveUp 0.8s forwards;
     margin-bottom: 30px;
 }
 
-#website-design-card {
-    animation: moveUp 0.8s forwards;
-    animation-delay: 3s;
-    animation-fill-mode: forwards;
-}
-
-.content-card:nth-child(1) {
-    animation-delay: 0.2s;
-}
-
-.content-card:nth-child(2) {
-    animation-delay: 0.4s;
-}
-
-.content-card:nth-child(3) {
-    animation-delay: 0.6s;
-}
-
-.content-card:nth-child(4) {
-    animation-delay: 0.8s;
-}
-
-.content-card:nth-child(5) {
-    animation-delay: 1.2s;
-}
-
-.content-card:nth-child(6) {
-    animation-delay: 1.6s;
-}
-
-.content-card:nth-child(7) {
-    animation-delay: 1.8s;
-}
-
-.content-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+@media (hover: hover) and (pointer: fine) {
+    .content-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+    }
 }
 
 .intro-video-container {
@@ -862,4 +757,31 @@ a:hover{
         width: 75%;
         padding: 6px 0;
     }
+}
+
+/* ---------- 按压反馈：所有可点元素按下时轻微缩小，松开回弹 ----------
+   html body 前缀用于提升优先级：后加载的样式表里同元素的 :hover transform
+   （如 card-button 的上浮）优先级与 :active 相同，按下瞬间会压过缩小效果 */
+html body #navbar li a:active,
+html body .home-button:active,
+html body .card-button:active,
+html body .link-button:active,
+html body .channel-button:active,
+html body .video-button:active,
+html body .dilemma-buttons .button:active,
+html body .content-description a:active,
+html body .card-links a:active,
+html body .contact-item:active {
+    transform: scale(0.96);
+}
+
+/* ---------- Reduced motion（系统开启「减弱动态效果」时：保留淡入结果，跳过位移和长编排） ---------- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0s !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    html { scroll-behavior: auto !important; }
 }

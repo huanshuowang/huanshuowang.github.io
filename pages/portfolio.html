@@ -50,7 +50,7 @@
             cursor: pointer;
             padding: 4px 8px;
             margin-left: 15px;
-            transition: all 0.3s ease;
+            transition: color 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -73,23 +73,28 @@
             transform: rotate(-180deg);
         }
         
+        /* 折叠动画：max-height 的起点由 JS 用 scrollHeight 固定成具体像素值，
+           因为从 none/auto 出发无法插值（这正是旧版只淡不收的原因） */
         .category-content {
-            transition: all 0.3s ease-out;
             overflow: visible;
-            max-height: none;
             opacity: 1;
-            transform: translateY(0);
             margin-bottom: 30px;
             padding: 0 20px 20px 20px;
+            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.3s ease,
+                        padding 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                        margin 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
+        .category-content.animating { overflow: hidden; }
+
         .category-content.collapsed {
             max-height: 0;
             opacity: 0;
-            transform: translateY(-10px);
             margin-top: 0;
             margin-bottom: 0;
-            padding: 0 20px;
+            padding-top: 0;
+            padding-bottom: 0;
             overflow: hidden;
         }
         
@@ -248,10 +253,12 @@
             background: #e8552d;
         }
 
-        .pbh-card:hover {
-            transform: translateY(-6px);
-            border-color: #e8552d;
-            box-shadow: 0 22px 50px -24px rgba(232,85,45,0.55);
+        @media (hover: hover) and (pointer: fine) {
+            .pbh-card:hover {
+                transform: translateY(-6px);
+                border-color: #e8552d;
+                box-shadow: 0 22px 50px -24px rgba(232,85,45,0.55);
+            }
         }
 
         .pbh-brand {
@@ -289,9 +296,12 @@
             transition: background .2s ease;
         }
 
-        .pbh-card:hover .pbh-cta { background: #d3421c; }
         .pbh-arr { display: inline-block; transition: transform .2s ease; }
-        .pbh-card:hover .pbh-arr { transform: translateX(4px); }
+        @media (hover: hover) and (pointer: fine) {
+            .pbh-card:hover .pbh-cta { background: #d3421c; }
+            .pbh-card:hover .pbh-arr { transform: translateX(4px); }
+        }
+        .pbh-card:active { transform: translateY(-2px) scale(0.99); }
 
         @media (max-width: 768px) {
             .pbh-card { padding: 32px 26px; }
@@ -428,7 +438,7 @@
                     <div class="work-content">
                         <div class="work-company"><a href="https://www.tiktok.com/about?lang=en" target="_blank">TikTok</a> <span class="work-position" target="_blank">| User Product Operations Intern</span></div>
                         <div class="work-time">March 2026-Present</div>
-                        <div class="work-description">I help small and medium businesses grow on TikTok LIVE — supporting initiatives around the Service+ feature and livestream performance to turn audiences into clients..</div>
+                        <div class="work-description">I help small and medium businesses grow on TikTok LIVE — supporting initiatives around the Service+ feature and livestream performance to turn audiences into clients.</div>
                     </div>
                 </div>
                 
@@ -558,13 +568,28 @@
         function toggleCategory(categoryId) {
             const content = document.getElementById(`${categoryId}-content`);
             const toggle = document.getElementById(`${categoryId}-toggle`);
-            if (content.classList.contains('collapsed')) {
-                content.classList.remove('collapsed');
-                toggle.classList.remove('collapsed');
-            } else {
+            const collapsing = !content.classList.contains('collapsed');
+
+            content.classList.add('animating');
+            if (collapsing) {
+                // 先把高度定格为具体像素，浏览器才能从这里插值收起
+                content.style.maxHeight = content.scrollHeight + 'px';
+                content.offsetHeight; // 强制回流，让起点生效
                 content.classList.add('collapsed');
+                content.style.maxHeight = '0px';
                 toggle.classList.add('collapsed');
+            } else {
+                content.classList.remove('collapsed');
+                content.style.maxHeight = content.scrollHeight + 'px';
+                toggle.classList.remove('collapsed');
             }
+            content.addEventListener('transitionend', function done(e) {
+                if (e.target !== content || e.propertyName !== 'max-height') return;
+                content.removeEventListener('transitionend', done);
+                content.classList.remove('animating');
+                // 展开完成后放开高度限制，内容再变高也不会被裁掉
+                if (!content.classList.contains('collapsed')) content.style.maxHeight = '';
+            });
         }
     </script>
 

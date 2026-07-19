@@ -53,9 +53,15 @@ p{
     height: 100%;
 }
 
-.link-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+@media (hover: hover) and (pointer: fine) {
+    .link-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .link-card:hover .link-button {
+        background-color: #3498db;
+    }
 }
 
 .link-image {
@@ -92,11 +98,7 @@ p{
     padding: 10px 20px;
     border-radius: 6px;
     font-weight: 500;
-    transition: background-color 0.3s ease;
-}
-
-.link-card:hover .link-button {
-    background-color: #3498db;
+    transition: background-color 0.3s ease, transform 160ms ease;
 }
 
 .links-container {
@@ -208,29 +210,31 @@ p{
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.content-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+@media (hover: hover) and (pointer: fine) {
+    .content-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+    }
 }
 
 .content-card:nth-child(1) {
-    animation-delay: 1.6s;
+    animation-delay: 0.15s;
 }
 
 .content-card:nth-child(2) {
-    animation-delay: 1.8s;
+    animation-delay: 0.25s;
 }
 
 .content-card:nth-child(3) {
-    animation-delay: 2.0s;
+    animation-delay: 0.35s;
 }
 
 .content-card:nth-child(4) {
-    animation-delay: 2.2s;
+    animation-delay: 0.45s;
 }
 
 .content-card:nth-child(5) {
-    animation-delay: 2.4s;
+    animation-delay: 0.55s;
 }
 
 .content-description {
@@ -269,18 +273,20 @@ p{
     border-radius: 4px;
     text-decoration: none;
     font-weight: 500;
-    transition: all 0.3s ease;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
     align-self: flex-start;
     border: 2px solid #000000;
     box-shadow: none;
 }
 
-.content-description a:hover {
-    background-color: #000000 !important;
-    color: #ffffff !important;
-    border-color: #000000;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+@media (hover: hover) and (pointer: fine) {
+    .content-description a:hover {
+        background-color: #000000 !important;
+        color: #ffffff !important;
+        border-color: #000000;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+    }
 }
 
 .card-links {
@@ -299,15 +305,17 @@ p{
     border-radius: 4px;
     text-decoration: none;
     font-weight: 500;
-    transition: all 0.3s ease;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
     border: 2px solid #000000;
     box-shadow: none;
 }
 
-.card-links a:hover {
-    background-color: #F5C500;
-    color: #ffffff;
-    border-color: #F5C500;
+@media (hover: hover) and (pointer: fine) {
+    .card-links a:hover {
+        background-color: #F5C500;
+        color: #ffffff;
+        border-color: #F5C500;
+    }
 }
 
 /* Override any other button styles */
@@ -391,10 +399,12 @@ p{
     height: 110px;
 }
 
-.contact-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    border-color: #F5C500;
+@media (hover: hover) and (pointer: fine) {
+    .contact-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        border-color: #F5C500;
+    }
 }
 
 .icon-container {
@@ -425,12 +435,14 @@ p{
     opacity: 0;
 }
 
-.contact-item:hover .icon-normal {
-    opacity: 0;
-}
+@media (hover: hover) and (pointer: fine) {
+    .contact-item:hover .icon-normal {
+        opacity: 0;
+    }
 
-.contact-item:hover .icon-hover {
-    opacity: 1;
+    .contact-item:hover .icon-hover {
+        opacity: 1;
+    }
 }
 
 .contact-text {
@@ -564,10 +576,12 @@ p{
     margin: 0 auto;
 }
 
-.card-button:hover {
-    background-color: #e6b800;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(245, 197, 0, 0.5);
+@media (hover: hover) and (pointer: fine) {
+    .card-button:hover {
+        background-color: #e6b800;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(245, 197, 0, 0.5);
+    }
 }
 
 /* Override the content-description a styles for card buttons */
@@ -627,7 +641,6 @@ p{
     gap: 20px;
     margin-top: 30px;
     padding: 10px;
-    transition: all 0.3s ease-out;
 }
 
 .video-card {
@@ -644,9 +657,11 @@ p{
     min-width: 0;
 }
 
-.video-card:hover {
-    transform: translateY(-7px);
-    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.2);
+@media (hover: hover) and (pointer: fine) {
+    .video-card:hover {
+        transform: translateY(-7px);
+        box-shadow: 0 14px 36px rgba(0, 0, 0, 0.2);
+    }
 }
 
 .video-content {

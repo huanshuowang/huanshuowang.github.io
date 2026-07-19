@@ -152,11 +152,14 @@
       width: 160px; background: white; padding: 9px 9px 32px;
       box-shadow: 3px 5px 16px rgba(0,0,0,0.22), 0 1px 4px rgba(0,0,0,0.1);
       transform: rotate(var(--pp-tilt, -1.5deg)); position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease; /* hover 结束后平滑落回，而不是瞬间弹回 */
     }
-    .pp-park-card:hover .pp-park-sticker {
-      animation: ppWobble 0.45s ease;
-      transform: rotate(0deg) scale(1.08) !important;
-      box-shadow: 6px 10px 28px rgba(0,0,0,0.28); z-index: 10;
+    @media (hover: hover) and (pointer: fine) {
+      .pp-park-card:hover .pp-park-sticker {
+        animation: ppWobble 0.45s ease;
+        transform: rotate(0deg) scale(1.08) !important;
+        box-shadow: 6px 10px 28px rgba(0,0,0,0.28); z-index: 10;
+      }
     }
     @keyframes ppWobble {
       0%   { transform: rotate(var(--pp-tilt,-2deg)) scale(1.0); }
@@ -218,6 +221,12 @@
       from { opacity: 0; transform: scale(0.86) rotate(-2deg); }
       to   { opacity: 1; transform: scale(1) rotate(0deg); }
     }
+    /* 退场：和入场对称的短收场，比 display:none 直接消失柔和（关闭比打开更常被快速触发，所以更短） */
+    .pp-modal-overlay.closing { opacity: 0; transition: opacity 0.16s ease; }
+    .pp-modal-overlay.closing .pp-modal-card { animation: ppPopOut 0.16s ease forwards; }
+    @keyframes ppPopOut {
+      to { opacity: 0; transform: scale(0.92) rotate(-1deg); }
+    }
     .pp-modal-close {
       position: absolute; top: 14px; right: 16px; font-size: 22px; cursor: pointer;
       color: #2b2118; background: none; border: none;
@@ -273,9 +282,11 @@
     .nav-items{display:flex;align-items:center;gap:12px;margin-left:auto}
     .npill{display:inline-flex;align-items:center;gap:5px;background:white;border:2px solid #2b2118;padding:7px 16px;border-radius:14px;box-shadow:3px 3px 0 #2b2118;font-size:13px;font-weight:500;color:#2b2118;white-space:nowrap;position:relative;transition:transform .22s ease,box-shadow .22s ease;cursor:pointer;font-family:inherit}
     .npill:hover{transform:rotate(0) scale(1.05);box-shadow:5px 5px 0 #2b2118}
+    .npill:active{transform:rotate(0) scale(0.96)}
+    .entry-outer:active{transform:rotate(0) scale(0.98)}
     .npill:focus-visible{outline:2px dashed var(--yellow);outline-offset:4px}
     .np1{transform:rotate(-1.2deg)}
-    .np-calc{border-color:var(--red)!important;border-width:3px!important;box-shadow:3px 3px 0 var(--red)!important;animation:navPulse 3s ease-in-out infinite}
+    .np-calc{border-color:var(--red)!important;border-width:3px!important;box-shadow:3px 3px 0 var(--red)!important;animation:navPulse 3s ease-in-out 3}
     @keyframes navPulse{0%,100%{box-shadow:3px 3px 0 var(--red)}50%{box-shadow:6px 6px 0 var(--red)}}
     .np-calc:hover{animation:none;box-shadow:7px 7px 0 var(--red)!important;transform:rotate(0) scale(1.05)}
     .np-new{position:absolute;top:-9px;right:-9px;width:22px;height:22px;border-radius:50%;background:var(--red);color:white;font-size:7.5px;font-weight:800;letter-spacing:.3px;text-transform:uppercase;display:flex;align-items:center;justify-content:center;font-family:sans-serif;border:1.5px solid white}
@@ -606,13 +617,21 @@
         <p>${park.note}</p>
       </div>
     `;
-    document.getElementById('pp-modal-overlay').classList.add('open');
+    const overlayEl = document.getElementById('pp-modal-overlay');
+    overlayEl.classList.remove('closing');
+    overlayEl.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
 
   function ppCloseModal() {
-    document.getElementById('pp-modal-overlay').classList.remove('open');
-    document.body.style.overflow = '';
+    const overlay = document.getElementById('pp-modal-overlay');
+    if (!overlay.classList.contains('open') || overlay.classList.contains('closing')) return;
+    overlay.classList.add('closing');
+    const card = overlay.querySelector('.pp-modal-card');
+    card.addEventListener('animationend', function done() {
+      overlay.classList.remove('open', 'closing');
+      document.body.style.overflow = '';
+    }, { once: true });
   }
   document.getElementById('pp-modal-close').addEventListener('click', ppCloseModal);
   document.getElementById('pp-modal-overlay').addEventListener('click', e => {
@@ -677,7 +696,9 @@
       requestAnimationFrame(animate);
     })();
 
+    const rmq = window.matchMedia('(prefers-reduced-motion: reduce)');
     window.ppFireworks = function(x, y, n) {
+      if (rmq.matches) return; // 尊重系统「减弱动态效果」设置
       for (let i = 0; i < (n || 45); i++) particles.push(new Particle(x, y));
     };
   })();
