@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curiosity Hub — Happy's Website</title>
+    <meta name="description" content="Happy Wang's curiosity hub: notes on what I'm learning, plus the courses, websites, and tools worth keeping.">
+    <link rel="icon" type="image/png" href="../img/happylogonav.png">
+    <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="../pages/css/style.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <!--
+    ================================================================
+    怎么更新这个页面（写给未来的自己，访客看不到这段）
+    ================================================================
+    两个数据文件：
+      posts.json  →  笔记
+      links.json  →  单独收藏的 Links 卡片（不挂在任何笔记下面）
+    Links 那一栏是两者合并：每篇笔记的 "source" 会自动生成卡片，
+    再加上 links.json 里你自己想放的东西。同一个网址只显示一次，
+    卡片按标题 A→Z 排列（跟你写进文件的先后无关）。
+
+    A. 加一篇笔记
+       1. 在 blog/posts/ 里新建 markdown，例如 2026-09-01-my-note.md
+          （正文里不用再写大标题，标题写在 posts.json 里；
+           正文里每个 ## 二级标题会自动变成文章左边的目录索引）
+          需要模板就复制 blog/posts/_template.md
+       2. 在 blog/posts.json 最上面加一段（越靠前越新）：
+            {
+              "slug": "my-note",
+              "title": "标题",
+              "date": "2026-09-01",
+              "summary": "一句话摘要，会显示在列表上",
+              "tags": ["UX"],
+              "file": "2026-09-01-my-note.md",
+              "source": {                      // 可选：这篇笔记的出处
+                "title": "资源名字",
+                "url": "https://...",
+                "type": "Reference",           // Course / Reference / Article / Tool / Fun，可自己新增
+                "note": "一句话介绍这个资源"
+              }
+            }
+          · 参考了好几个来源就把 "source" 写成数组：[{...}, {...}]
+          · 不填 "source" 也行，只是不会往 Links 里加卡片
+          · 卡片上的标签默认跟着笔记的 tags 走；想单独指定就在 source 里写 "tags"
+       3. 图片放 blog/assets/，正文里写：![描述](assets/图片.jpg)
+
+    B. 只想收藏一个链接（不写笔记）
+       在 blog/links.json 最上面加一段：
+            {
+              "title": "资源名字",
+              "url": "https://...",
+              "type": "Course",              // Course / Reference / Article / Tool / Fun
+              "note": "一句话介绍，会显示在卡片上；书名/片名用 *星号* 包起来会显示成斜体",
+              "tags": ["Writing"],
+              "date": "2026-09-01"             // 只是记录什么时候加的，不影响排序
+            }
+
+    C. 注意
+       · 两个 .json 都是标准 JSON，最后一项后面不要留逗号，否则页面会报错
+       · 本地直接双击 index.html 打不开内容（浏览器不允许 file:// 读取 json），
+         起个本地服务器再看：python3 -m http.server
+    ================================================================
+    -->
+    <div id="navbar">
+        <a href="../index.html"><img class="nav-logo" src="../img/happylogo.png" width="50px" alt="Happy Logo"></a>
+        <ul>
+            <li><a href="../index.html#about">About</a></li>
+            <li><a href="../pages/portfolio.html">Portfolio</a></li>
+            <li><a href="../pages/contact.html">Contact</a></li>
+        </ul>
+    </div>
+
+    <main class="blog-container">
+        <!-- ── List view (notes + library) ── -->
+        <section id="list-view">
+            <header class="blog-header">
+                <h1 class="blog-title">Curiosity Hub</h1>
+                <p class="blog-subtitle">Everything I have learned, want to learn, and find interesting to learn!</p>
+                <div class="blog-stats" id="blog-stats"></div>
+            </header>
+
+            <div class="blog-toolbar">
+                <div class="blog-tabs" role="tablist">
+                    <button class="blog-tab is-active" role="tab" data-view="links" aria-selected="true">Links</button>
+                    <button class="blog-tab" role="tab" data-view="notes" aria-selected="false">Notes</button>
+                </div>
+                <div class="blog-search">
+                    <input type="search" id="blog-search-input" placeholder="Search titles, notes, tags…" aria-label="Search the learning log">
+                </div>
+            </div>
+
+            <!-- Links -->
+            <div class="blog-panel" id="panel-links">
+                <p class="panel-intro">The sources behind my notes, plus the courses, websites, and tools I want to keep around.</p>
+                <div class="filter-row" id="links-filters"></div>
+                <div class="link-grid" id="link-list"><p class="blog-empty">Loading…</p></div>
+            </div>
+
+            <!-- Notes -->
+            <div class="blog-panel" id="panel-notes" hidden>
+                <div class="filter-row" id="notes-filters"></div>
+                <div class="note-list" id="note-list"><p class="blog-empty">Loading…</p></div>
+            </div>
+        </section>
+
+        <!-- ── Article view ── -->
+        <article class="blog-article" id="article-view" hidden>
+            <a class="article-back" href="#/notes">← Back to all notes</a>
+            <div class="article-layout">
+                <aside class="article-toc" id="article-toc" hidden></aside>
+                <div class="article-main">
+                    <div class="article-head" id="article-head"></div>
+                    <div class="article-body" id="article-body"></div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- 合集卡点开后的弹窗：桌面居中，手机全屏覆盖 -->
+    <dialog class="collection-modal" id="collection-modal" aria-labelledby="modal-title">
+        <button class="modal-close" type="button" id="modal-close" aria-label="Close">&times;</button>
+        <div class="modal-body" id="modal-body"></div>
+    </dialog>
+
+    <footer class="copyright">
+        <p>Copyright © 2026 Huanshuo (Happy) Wang. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+    <script src="blog.js"></script>
+</body>
+</html>

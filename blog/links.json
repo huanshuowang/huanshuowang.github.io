@@ -1,0 +1,131 @@
+[
+  {
+    "title": "Live Performances / Experience / Films in LA",
+    "type": "Fun",
+    "note": "A running list of places in LA to check when I'm free and looking for something fun.",
+    "tags": [
+      "Live Entertainment",
+      "LA"
+    ],
+    "date": "2026-08-24",
+    "items": [
+      {
+        "label": "Center Theatre Group",
+        "url": "https://www.centertheatregroup.org/"
+      },
+      {
+        "label": "Pantages Theatre",
+        "note": "Broadway musicals",
+        "url": "https://www.broadwayinhollywood.com/"
+      },
+      {
+        "label": "COSM LA",
+        "url": "https://www.cosm.com/los-angeles/"
+      },
+      {
+        "label": "Candlelight",
+        "url": "https://feverup.com/en/los-angeles/candlelight"
+      },
+      {
+        "group": "Movies",
+        "links": [
+          {
+            "label": "Academy Museum of Motion Pictures",
+            "note": "classic movie screenings / special events",
+            "url": "https://www.academymuseum.org/films"
+          },
+          {
+            "label": "Regal LA LIVE",
+            "url": "https://www.regmovies.com/theatres/regal-la-live-1484"
+          },
+          {
+            "label": "AMC Theatres",
+            "url": "https://www.amctheatres.com/movie-theatres/los-angeles"
+          },
+          {
+            "label": "TCL",
+            "note": "for IMAX",
+            "url": "https://www.tclchinesetheatres.com/films"
+          },
+          {
+            "label": "Universal Cinema",
+            "note": "for IMAX / premiere",
+            "url": "https://www.amctheatres.com/movie-theatres/los-angeles/universal-cinema-an-amc-theatre"
+          }
+        ]
+      },
+      {
+        "group": "Theme Parks",
+        "links": [
+          {
+            "label": "Universal Studios Hollywood",
+            "url": "https://www.universalstudioshollywood.com/"
+          },
+          {
+            "label": "Disneyland Resort",
+            "url": "https://disneyland.disney.go.com/"
+          },
+          {
+            "label": "Six Flags Magic Mountain",
+            "url": "https://www.sixflags.com/magicmountain"
+          },
+          {
+            "label": "Knott's Berry Farm",
+            "url": "https://www.knotts.com/"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Themed Entertainment Jobs",
+    "url": "https://themedentertainmentjobs.com/",
+    "type": "Tool",
+    "note": "A job board dedicated to positions in the themed entertainment industry.",
+    "tags": [
+      "Themed Entertainment"
+    ],
+    "date": "2026-08-24"
+  },
+  {
+    "title": "ASCII Art Generator",
+    "url": "http://www.network-science.de/ascii/",
+    "type": "Tool",
+    "note": "Fun stuff when people actually write HTML line by line — mine is on my contact page.",
+    "tags": [
+      "Creative"
+    ],
+    "date": "2026-08-24"
+  },
+  {
+    "title": "Khan Academy",
+    "url": "https://www.khanacademy.org/",
+    "type": "Course",
+    "note": "For anyone who wants to build a specific hard skill or work through a full course. In high school I found their AP courses direct and easy to follow — great as self-study material or a supplement to class. Right now I'm using it to learn computer programming.",
+    "tags": [
+      "Learning"
+    ],
+    "date": "2026-08-24"
+  },
+  {
+    "title": "CrashCourse",
+    "url": "https://www.youtube.com/@crashcourse",
+    "type": "Course",
+    "note": "Anything you want to learn, they have a dedicated, well-organized, and visually engaging course for it. Fun fact: co-founder John Green is also the writer of *The Fault in Our Stars*.",
+    "tags": [
+      "Learning"
+    ],
+    "date": "2026-08-24"
+  },
+  {
+    "title": "Chuck Lorre's Vanity Cards",
+    "url": "https://chucklorre.com/",
+    "type": "Fun",
+    "note": "The full archive of Vanity Cards from the creator of my favorite sitcom, *The Big Bang Theory* (of course, he's more than that — he's the king of the sitcom). He's still updating this website!!",
+    "tags": [
+      "Creative",
+      "TV/Film"
+    ],
+    "date": "2026-08-24"
+  }
+]

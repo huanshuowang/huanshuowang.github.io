@@ -1,0 +1,22 @@
+[
+  {
+    "slug": "laws-of-ux",
+    "title": "Laws of UX",
+    "date": "2026-08-24",
+    "summary": "Learning notes from lawsofux.com — the psychology principles behind why an interface feels easy to use.",
+    "tags": [
+      "UX"
+    ],
+    "file": "2026-08-24-laws-of-ux.md",
+    "source": {
+      "title": "Laws of UX",
+      "url": "https://lawsofux.com/",
+      "type": "Reference",
+      "note": "Laws of UX is a collection of best practices that designers can consider when building user interfaces",
+      "tags": [
+        "UX",
+        "Learning"
+      ]
+    }
+  }
+]
