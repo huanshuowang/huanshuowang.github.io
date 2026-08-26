@@ -1,5 +1,85 @@
 [
   {
+    "title": "Magnific",
+    "url": "https://www.magnific.com/",
+    "type": "Tool",
+    "note": "It used to be called Freepik. A powerful place for image assets (and video/audio now). I search for mockups here and create product visuals.",
+    "tags": [
+      "Creative",
+      "Design"
+    ],
+    "date": "2026-08-24"
+  },
+  {
+    "title": "Musopen",
+    "url": "https://musopen.org/music/",
+    "type": "Tool",
+    "note": "All the music here is royalty-free and copyright-free — meaning you can use it in your YouTube video or short film.",
+    "tags": [
+      "Creative",
+      "Music"
+    ],
+    "date": "2026-08-24"
+  },
+  {
+    "title": "Poki",
+    "url": "https://poki.com/",
+    "type": "Fun",
+    "note": "A collection of games that you can play online instantly! Some games I like: Stickman Hook, Ledge Throw, and Subway Surfers.",
+    "tags": [
+      "Games"
+    ],
+    "date": "2026-08-24"
+  },
+  {
+    "title": "Google Doodle Games",
+    "url": "https://doodles.google/search/?form_tags=interactive%20game",
+    "type": "Fun",
+    "note": "Find and play all the archived Google Doodle games here! My favorites are PAC-MAN, Halloween 2022, and Halloween 2020.",
+    "tags": [
+      "Games"
+    ],
+    "date": "2026-08-24"
+  },
+  {
+    "title": "The Useless Web",
+    "url": "https://theuselessweb.com/",
+    "type": "Fun",
+    "note": "“Take me to another useless website.”",
+    "tags": [],
+    "date": "2026-08-24"
+  },
+  {
+    "title": "Claude Academy",
+    "url": "https://academy.claude.com/courses",
+    "type": "Course",
+    "note": "Learn how to work with AI from Claude's official courses (certificate granted).",
+    "tags": [
+      "Learning"
+    ],
+    "date": "2026-08-24"
+  },
+  {
+    "title": "iLoveIMG",
+    "url": "https://www.iloveimg.com/",
+    "type": "Tool",
+    "note": "Edit your image for free on the web.",
+    "tags": [
+      "Productivity"
+    ],
+    "date": "2026-08-24"
+  },
+  {
+    "title": "iLovePDF",
+    "url": "https://www.ilovepdf.com/",
+    "type": "Tool",
+    "note": "A powerful tool for PDF-related work. Free.",
+    "tags": [
+      "Productivity"
+    ],
+    "date": "2026-08-24"
+  },
+  {
     "title": "Live Performances / Experience / Films in LA",
     "type": "Fun",
     "note": "A running list of places in LA to check when I'm free and looking for something fun.",
@@ -90,7 +170,7 @@
   {
     "title": "ASCII Art Generator",
     "url": "http://www.network-science.de/ascii/",
-    "type": "Tool",
+    "type": "Fun",
     "note": "Fun stuff when people actually write HTML line by line — mine is on my contact page.",
     "tags": [
       "Creative"
@@ -108,7 +188,7 @@
     "date": "2026-08-24"
   },
   {
-    "title": "CrashCourse",
+    "title": "Crash Course",
     "url": "https://www.youtube.com/@crashcourse",
     "type": "Course",
     "note": "Anything you want to learn, they have a dedicated, well-organized, and visually engaging course for it. Fun fact: co-founder John Green is also the writer of *The Fault in Our Stars*.",
