@@ -1,9 +1,25 @@
 [
   {
+    "slug": "mickeys-10-commandments",
+    "title": "Mickey's 10 Commandments – Marty Sklar",
+    "date": "2026-08-25",
+    "summary": "Ten guidelines to theme park design developed by Walt Disney Imagineering President Marty Sklar.",
+    "tags": [
+      "Themed Entertainment"
+    ],
+    "file": "2026-08-25-mickeys-10-commandments.md",
+    "source": {
+      "title": "Mickey's 10 Commandments – Marty Sklar",
+      "url": "https://www.themedattraction.com/mickeys-10-commandments-marty-sklar/",
+      "type": "Article",
+      "note": "Ten guidelines to theme park design developed by Walt Disney Imagineering President Marty Sklar."
+    }
+  },
+  {
     "slug": "laws-of-ux",
     "title": "Laws of UX",
     "date": "2026-08-24",
-    "summary": "Learning notes from lawsofux.com — the psychology principles behind why an interface feels easy to use.",
+    "summary": "Laws of UX is a collection of best practices that designers can consider when building user interfaces.",
     "tags": [
       "UX"
     ],
