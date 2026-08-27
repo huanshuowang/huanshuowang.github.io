@@ -504,10 +504,14 @@ body.modal-open { overflow: hidden; }
     }
 }
 
-.article-toc {
+.article-side {
     position: sticky;
     top: 110px;
 }
+
+/* 开关跟着目录一起 sticky，滚到正文中间也能随时切换 */
+.side-lang { margin-bottom: 22px; }
+.side-lang .lang-toggle { margin-top: 0; }
 
 .toc-label {
     font-size: 11px;
@@ -542,9 +546,13 @@ body.modal-open { overflow: hidden; }
     border-left-color: #F5C500;
 }
 
-/* 窄屏放不下侧边索引，直接收起 */
+/* 窄屏放不下侧边栏，收起；语言开关改回标题下面那个 */
 @media (max-width: 1023px) {
-    .article-toc { display: none; }
+    .article-side { display: none; }
+}
+
+@media (min-width: 1024px) {
+    .head-lang { display: none; }
 }
 
 .article-back {
@@ -626,6 +634,69 @@ body.modal-open { overflow: hidden; }
 
 .article-body a:hover { background-color: #fdf3cc; }
 
+/* ── 中英切换 ── */
+.lang-toggle {
+    display: inline-flex;
+    margin-top: 16px;
+    border: 1px solid #ddd;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.lang-btn {
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: #888;
+    background: #fff;
+    border: 0;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.lang-btn + .lang-btn { border-left: 1px solid #eee; }
+
+.lang-btn:hover { color: #1b1b1b; }
+
+.lang-btn.is-active {
+    background: #1b1b1b;
+    color: #fff;
+}
+
+/* 中文正文：行距略大、不要断词 */
+.article-body[lang="zh"] {
+    line-height: 1.9;
+    word-break: normal;
+}
+
+.article-body[lang="zh"] li { margin-bottom: 10px; }
+
+/* 每个概念的定义句 */
+.article-body .definition {
+    font-style: italic;
+    color: #444;
+    margin: 0 0 18px;
+}
+
+/* 「Closely related to …」这类交叉引用：整行灰、左边一道细线，
+   但里面的链接保留正文那条黄色下划线 */
+.article-body .note-ref {
+    border-left: 3px solid #e2e2e2;
+    padding-left: 14px;
+    margin: -4px 0 20px;
+    font-size: 15px;
+    color: #999;
+}
+
+.article-body .note-ref a {
+    color: #8c8c8c;
+}
+
+.article-body .note-ref a:hover {
+    color: #1b1b1b;
+}
+
 .article-body blockquote {
     margin: 0 0 18px;
     padding: 6px 0 6px 20px;
@@ -662,6 +733,60 @@ body.modal-open { overflow: hidden; }
     background: none;
     color: inherit;
     padding: 0;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    margin: 0 0 22px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.article-body table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 560px;
+    font-size: 14.5px;
+    line-height: 1.6;
+}
+
+.article-body th,
+.article-body td {
+    border: 1px solid #e6e6e6;
+    padding: 9px 12px;
+    text-align: left;
+    vertical-align: top;
+}
+
+/* 两列表格（快速总结那种）：左右等宽，不让长句子把一列撑满整行 */
+.article-body table.cols-2 {
+    table-layout: fixed;
+    min-width: 0;
+}
+
+.article-body table.cols-2 th,
+.article-body table.cols-2 td {
+    width: 50%;
+    min-width: 0;
+    white-space: normal;
+}
+
+/* 中文释义列给足宽度，「个人身份认证。」这种短句不该被折成两行 */
+.article-body td:last-child,
+.article-body th:last-child {
+    min-width: 12em;
+}
+
+.article-body th {
+    background: #fafafa;
+    font-weight: 600;
+    color: #1b1b1b;
+}
+
+/* 第一列只放缩写，不该因为个别长词条（Penetration Rate）把整列撑宽 */
+.article-body td:first-child {
+    font-weight: 600;
+    color: #1b1b1b;
+    width: 1%;
 }
 
 .article-body hr {

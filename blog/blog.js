@@ -17,12 +17,25 @@
     // Links 的筛选按钮固定这几个（数据里出现的新类型会自动补在后面）
     var TYPES = ['All', 'Course', 'Reference', 'Article', 'Tool', 'Fun'];
 
+    // 笔记可以有中英两版：posts.json 里填了 file_zh 的那篇会出现语言切换
+    var LANG_KEY = 'hub-note-lang';
+
+    function getLang() {
+        try { return localStorage.getItem(LANG_KEY) === 'zh' ? 'zh' : 'en'; }
+        catch (e) { return 'en'; }   // 隐私模式下 localStorage 会抛错
+    }
+
+    function setLang(lang) {
+        try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    }
+
     var state = {
         posts: [],
         links: [],
         sources: [],
         rendered: [],
         view: 'links',      // 'links' | 'notes'
+        currentPost: null,
         noteTag: 'All',
         linkType: 'All',
         query: ''
@@ -34,6 +47,7 @@
         articleHead:document.getElementById('article-head'),
         articleBody:document.getElementById('article-body'),
         articleToc: document.getElementById('article-toc'),
+        sideLang:   document.getElementById('side-lang'),
         stats:      document.getElementById('blog-stats'),
         search:     document.getElementById('blog-search-input'),
         tabs:       document.querySelectorAll('.blog-tab'),
@@ -311,6 +325,7 @@
                 return '<blockquote>' + inline(b.replace(/^>\s?/gm, '')) + '</blockquote>';
             }
             if (/^(-{3,}|\*{3,})$/.test(b)) return '<hr>';
+            if (/^\|/.test(b)) return miniTable(b);
             if (/^[-*]\s/.test(b)) {
                 return '<ul>' + b.split('\n').map(function (li) {
                     return '<li>' + inline(li.replace(/^[-*]\s*/, '')) + '</li>';
@@ -325,11 +340,29 @@
             return '<p>' + inline(b) + '</p>';
         }).join('\n');
 
+        // markdown 表格：第一行表头，第二行是 |---|---| 分隔线，其余是数据行
+        function miniTable(block) {
+            var rows = block.split('\n').filter(function (r) { return r.trim(); });
+            function cells(row) {
+                return row.replace(/^\||\|$/g, '').split('|').map(function (c) { return c.trim(); });
+            }
+            var head = cells(rows[0]);
+            var body = rows.slice(2).map(function (r) {
+                return '<tr>' + cells(r).map(function (c) {
+                    return '<td>' + inline(c) + '</td>';
+                }).join('') + '</tr>';
+            }).join('');
+            return '<div class="table-wrap"><table><thead><tr>' +
+                   head.map(function (c) { return '<th>' + inline(c) + '</th>'; }).join('') +
+                   '</tr></thead><tbody>' + body + '</tbody></table></div>';
+        }
+
         function inline(t) {
             return esc(t)
                 .replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, '<img src="$2" alt="$1">')
                 .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
                 .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/&lt;(\/?u)&gt;/g, '<$1>')   // markdown 没有下划线语法，正文里用 <u>，这里放行
                 .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
                 .replace(/(^|[^*])\*([^*]+)\*/g, '$1<em>$2</em>')
                 .replace(/\n/g, '<br>');
@@ -375,6 +408,16 @@
             [].forEach.call(heads, function (h) { tocSpy.observe(h); });
         }
 
+        // 正文里指向本篇小节的链接：同样不能让 #xxx 写进地址栏，否则会被路由当成一个新页面
+        el.articleBody.addEventListener('click', function (e) {
+            var a = e.target.closest('a[href^="#"]');
+            if (!a) return;
+            var target = document.getElementById(a.getAttribute('href').slice(1));
+            if (!target) return;
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
         el.articleToc.addEventListener('click', function (e) {
             var a = e.target.closest('.toc-link');
             if (!a) return;
@@ -393,6 +436,7 @@
 
         if (!post) {
             el.articleToc.hidden = true;
+            el.sideLang.hidden = true;
             el.articleHead.innerHTML = '<h1>Note not found</h1>';
             el.articleBody.innerHTML = '<p>That note doesn\'t exist (yet). Head back to the list and pick another one.</p>';
             document.title = 'Curiosity Hub — Happy\'s Website';
@@ -401,27 +445,90 @@
 
         document.title = post.title + ' — Curiosity Hub — Happy\'s Website';
         el.articleToc.hidden = true;
+
+        var bilingual = !!post.file_zh;
+        var lang = bilingual ? getLang() : 'en';
+
+        var toggleHtml = '<div class="lang-toggle" role="group" aria-label="Language">' +
+                '<button type="button" class="lang-btn" data-lang="en">EN</button>' +
+                '<button type="button" class="lang-btn" data-lang="zh">中文</button>' +
+            '</div>';
+
+        // 宽屏放在左侧目录上方（跟着 sticky，滚动时始终能点）；窄屏没有侧栏，放回标题下面
+        el.sideLang.innerHTML = bilingual ? toggleHtml : '';
+        el.sideLang.hidden = !bilingual;
+        var toggle = bilingual ? '<div class="head-lang">' + toggleHtml + '</div>' : '';
+
         el.articleHead.innerHTML =
             '<div class="article-meta">' + esc(prettyDate(post.date)) + '</div>' +
-            '<h1>' + esc(post.title) + '</h1>' +
+            '<h1>' + esc(titleFor(post, lang)) + '</h1>' +
             ((post.tags || []).length
                 ? '<div class="tag-row">' + post.tags.map(function (t) {
                       return '<span class="tag">' + esc(t) + '</span>';
                   }).join('') + '</div>'
-                : '');
+                : '') +
+            toggle;
+
+        if (bilingual && !el.articleView.dataset.langBound) {
+            el.articleView.dataset.langBound = '1';   // 只绑一次，换文章时复用
+            el.articleView.addEventListener('click', function (e) {
+                var btn = e.target.closest('.lang-btn');
+                if (!btn || btn.classList.contains('is-active')) return;
+                setLang(btn.dataset.lang);
+                loadBody(state.currentPost, btn.dataset.lang);
+            });
+        }
+        state.currentPost = post;
+
+        loadBody(post, lang);
+    }
+
+    function titleFor(post, lang) {
+        return (lang === 'zh' && post.title_zh) ? post.title_zh : post.title;
+    }
+
+    // 正文按语言载入；切换语言时目录和标题跟着重建
+    function loadBody(post, lang) {
+        var file = (lang === 'zh' && post.file_zh) ? post.file_zh : post.file;
+
+        [].forEach.call(el.articleView.querySelectorAll('.lang-btn'), function (b) {
+            b.classList.toggle('is-active', b.dataset.lang === lang);
+        });
+
+        var h1 = el.articleHead.querySelector('h1');
+        if (h1) h1.textContent = titleFor(post, lang);
+        document.title = titleFor(post, lang) + ' — Curiosity Hub — Happy\'s Website';
+
         el.articleBody.innerHTML = '<p class="blog-empty">Loading…</p>';
 
-        fetch('posts/' + post.file)
+        fetch('posts/' + file)
             .then(function (r) {
                 if (!r.ok) throw new Error(r.status);
                 return r.text();
             })
             .then(function (md) {
                 el.articleBody.innerHTML = renderMarkdown(md);
+                // 表格在窄屏要能横向滚，给没包过的补一层容器
+                [].forEach.call(el.articleBody.querySelectorAll('table'), function (t) {
+                    var cols = t.querySelectorAll('thead th').length;
+                    if (cols) t.classList.add('cols-' + cols);   // 两列表要等宽，多列表按内容分配
+                    if (t.parentNode.classList.contains('table-wrap')) return;
+                    var wrap = document.createElement('div');
+                    wrap.className = 'table-wrap';
+                    t.parentNode.insertBefore(wrap, t);
+                    wrap.appendChild(t);
+                });
+                el.articleBody.lang = lang === 'zh' ? 'zh' : 'en';
                 buildToc();
-                var mins = Math.max(1, Math.round(md.split(/\s+/).length / 220));
+                // 中文没有词间空格，按字数估算才准
+                var mins = lang === 'zh'
+                    ? Math.max(1, Math.round(md.replace(/\s/g, '').length / 400))
+                    : Math.max(1, Math.round(md.split(/\s+/).length / 220));
                 var meta = el.articleHead.querySelector('.article-meta');
-                if (meta) meta.textContent = meta.textContent + ' · ' + mins + ' min read';
+                if (meta) {
+                    meta.textContent = prettyDate(post.date) +
+                        (lang === 'zh' ? ' · 约 ' + mins + ' 分钟' : ' · ' + mins + ' min read');
+                }
             })
             .catch(function () {
                 el.articleBody.innerHTML = '<p class="blog-empty">Couldn\'t load this note. Try again in a moment.</p>';

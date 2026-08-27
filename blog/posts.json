@@ -1,5 +1,38 @@
 [
   {
+    "slug": "ops-metrics-terminology",
+    "title": "A Metrics & Terminology Guide for Livestream Lead-Gen Operations",
+    "date": "2026-08-26",
+    "summary": "A glossary of terms and related knowledge that I built during an operations internship at a major tech company.",
+    "tags": [
+      "Operations",
+      "Data"
+    ],
+    "file": "2026-08-26-ops-metrics-terminology.md",
+    "file_zh": "2026-08-26-ops-metrics-terminology.zh.md",
+    "title_zh": "直播留资运营词汇表和指标参考"
+  },
+  {
+    "slug": "laws-of-ux",
+    "title": "Laws of UX",
+    "date": "2026-08-26",
+    "summary": "Laws of UX is a collection of best practices that designers can consider when building user interfaces.",
+    "tags": [
+      "UX"
+    ],
+    "file": "2026-08-26-laws-of-ux.md",
+    "source": {
+      "title": "Laws of UX",
+      "url": "https://lawsofux.com/",
+      "type": "Reference",
+      "note": "Laws of UX is a collection of best practices that designers can consider when building user interfaces",
+      "tags": [
+        "UX",
+        "Learning"
+      ]
+    }
+  },
+  {
     "slug": "mickeys-10-commandments",
     "title": "Mickey's 10 Commandments – Marty Sklar",
     "date": "2026-08-25",
@@ -13,26 +46,6 @@
       "url": "https://www.themedattraction.com/mickeys-10-commandments-marty-sklar/",
       "type": "Article",
       "note": "Ten guidelines to theme park design developed by Walt Disney Imagineering President Marty Sklar."
-    }
-  },
-  {
-    "slug": "laws-of-ux",
-    "title": "Laws of UX",
-    "date": "2026-08-24",
-    "summary": "Laws of UX is a collection of best practices that designers can consider when building user interfaces.",
-    "tags": [
-      "UX"
-    ],
-    "file": "2026-08-24-laws-of-ux.md",
-    "source": {
-      "title": "Laws of UX",
-      "url": "https://lawsofux.com/",
-      "type": "Reference",
-      "note": "Laws of UX is a collection of best practices that designers can consider when building user interfaces",
-      "tags": [
-        "UX",
-        "Learning"
-      ]
     }
   }
 ]
