@@ -88,6 +88,42 @@
             border-radius: 8px 8px 0 0;
         }
         
+        /* ── TikTok 板块 ── */
+        /* 系列卡片：缩略图角上标数量，告诉访客这是一组而不是单条 */
+        .video-card { position: relative; }
+        .video-count {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.72);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            padding: 4px 9px;
+            border-radius: 999px;
+        }
+
+        /* 版式沿用 Dilemma：左边视频、右边文字与按钮。
+           竖屏视频所以左栏三张卡比下面的横版卡窄。 */
+        /* 四张竖版卡一行放下：左栏比右栏宽，卡片尺寸和三张时保持一致 */
+        .dilemma-container.tt-container { grid-template-columns: 2fr 1fr; }
+        .tt-videos {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .tt-videos .video-thumbnail { aspect-ratio: 9 / 16; }
+        .tt-videos .video-title { font-size: 14px; }
+        .tt-videos .video-date { font-size: 12px; }
+
+        @media (max-width: 900px) {
+            .dilemma-container.tt-container { grid-template-columns: 1fr; }
+            .tt-videos { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            /* 竖排时先说这段是什么、给出账号入口，再铺视频卡 */
+            .tt-container .dilemma-info { order: -1; padding-bottom: 0; }
+        }
+
         .category-section {
             margin-bottom: 20px;
         }
@@ -203,9 +239,10 @@
         }
         
         @media (max-width: 600px) {
+            /* 一行一张的话一屏只能看到两张多，信息量太少，手机上也走两列 */
             .video-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
                 padding: 0;
             }
             
@@ -214,23 +251,29 @@
             }
             
             .video-content {
-                padding: 10px;
+                padding: 9px 10px 11px;
             }
             
             .video-title {
-                font-size: 15px;
+                font-size: 13px;
+                line-height: 1.35;
                 font-weight: 500;
                 line-clamp: unset;
                 -webkit-line-clamp: unset;
                 display: block;
             }
 
+            .video-date {
+                font-size: 11px;
+            }
+
+            /* 卡片更贴边，参考 Curiosity Hub 的留白 */
             .category-content {
-                padding: 0 15px 15px 15px;
+                padding: 0 8px 15px 8px;
             }
 
             .category-content.collapsed {
-                padding: 0 15px;
+                padding: 0 8px;
             }
         }
 
@@ -460,6 +503,22 @@
                 font-size: 14px;
             }
         }
+    
+        /* ── 手机端收边 ──
+           下面这几条必须放在 style 的最后：文件里 900px / 480px 的块写在
+           600px 块之后，同权重下后写的赢，写在前面会被盖掉。 */
+        @media (max-width: 600px) {
+            .dilemma-container,
+            .dilemma-container.tt-container {
+                padding: 0;
+                gap: 16px;
+            }
+
+            .dilemma-info {
+                padding: 0 0 4px;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -467,7 +526,8 @@
         <a href="../index.html"><img class="nav-logo" src="../img/happylogo.png" width="50px"></a>
         <ul>
             <li><a href="../index.html#about">About</a></li>
-            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="portfolio.html">Work</a></li>
+            <li><a href="../blog/index.html">Blog</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
     </div>
@@ -475,7 +535,141 @@
     <div class="links-container">
         <h1>Filmmaking Portfolio</h1>
         
-        <div class="category-section">
+        <div class="category-section" data-toc="TikTok">
+            <div class="category-header" onclick="toggleCategory('tiktok')">
+                <h2 class="category-heading">
+                    Video Producer: TikTok Service+
+                    <button class="category-toggle" id="tiktok-toggle"></button>
+                </h2>
+            </div>
+            <div class="category-content" id="tiktok-content">
+                <div class="dilemma-container tt-container">
+                    <div class="tt-videos">
+                        <a href="https://www.tiktok.com/@tiktokserviceplus/video/7642445957073784094" target="_blank" class="video-card">
+                            <img class="video-thumbnail" src="img/tiktok/showcase.jpg" alt="Creator Showcase: @Mikey Caloca" loading="lazy">
+                            <div class="video-content">
+                                <h2 class="video-title">Creator Showcase: @Mikey Caloca</h2>
+                                <p class="video-date">May 21, 2026</p>
+                            </div>
+                        </a>
+
+                        <a href="https://www.tiktok.com/@tiktokserviceplus/video/7649561069949685022" target="_blank" class="video-card">
+                            <img class="video-thumbnail" src="img/tiktok/education.jpg" alt="Lead Conversion Education" loading="lazy">
+                            <div class="video-content">
+                                <h2 class="video-title">Lead Conversion Education</h2>
+                                <p class="video-date">June 10, 2026</p>
+                            </div>
+                        </a>
+
+                        <a href="https://www.tiktok.com/@tiktokserviceplus/video/7649913206646820126" target="_blank" class="video-card">
+                            <img class="video-thumbnail" src="img/tiktok/showcase-ricardo.jpg" alt="Creator Showcase: @Ricardo Soto" loading="lazy">
+                            <div class="video-content">
+                                <h2 class="video-title">Creator Showcase: @Ricardo Soto</h2>
+                                <p class="video-date">June 10, 2026</p>
+                            </div>
+                        </a>
+
+                        <a href="https://www.tiktok.com/@tiktokserviceplus/video/7650181637367532831" target="_blank" class="video-card">
+                            <img class="video-thumbnail" src="img/tiktok/walkthrough.jpg" alt="Walkthrough Tutorial" loading="lazy">
+                            <div class="video-content">
+                                <h2 class="video-title">Walkthrough Tutorial</h2>
+                                <p class="video-date">June 11, 2026</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="dilemma-info">
+                        <p class="dilemma-description">
+                            I produced 15 videos for the official TikTok Service+ account, including education pieces,
+                            tutorials, and creator showcase series with 2.1M+ views in total. I owned scripting,
+                            creator outreach, and post-production from end to end. With that hands-on experience, I built
+                            an AIGC video pipeline, cutting per-video turnaround from
+                            10+ hours to 30 minutes.
+                        </p>
+                        <div class="dilemma-buttons">
+                            <a href="https://www.tiktok.com/@tiktokserviceplus" target="_blank" class="button secondary">Visit TikTok Account →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section" data-toc="USC Viterbi">
+            <div class="category-header" onclick="toggleCategory('viterbi')">
+                <h2 class="category-heading">
+                    Video Editor: USC Viterbi School of Engineering
+                    <button class="category-toggle" id="viterbi-toggle"></button>
+                </h2>
+            </div>
+            <div class="category-content" id="viterbi-content">
+                <div class="video-grid">
+                    <a href="https://www.youtube.com/watch?v=FBybjcx_tIA" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="img/youtube/year-in-review-2025-26.jpg" alt="Year in Review 2025-2026">
+                        <div class="video-content">
+                            <h2 class="video-title">Year in Review 2025-2026</h2>
+                            <p class="video-contribution">Asset Coordination</p>
+                            <p class="video-date">August 14, 2026</p>
+                        </div>
+                    </a>
+
+                    <a href="https://www.youtube.com/watch?v=paia9UZaJjk" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="img/youtube/india-awards-2025.jpg" alt="2025 USC India Awards">
+                        <span class="video-count">4 videos</span>
+                        <div class="video-content">
+                            <h2 class="video-title">2025 USC India Awards</h2>
+                            <p class="video-contribution">Asset Coordination</p>
+                            <p class="video-date">December 18, 2025</p>
+                        </div>
+                    </a>
+
+                    <a href="https://www.youtube.com/watch?v=bEGTGDpkfg4" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="https://img.youtube.com/vi/bEGTGDpkfg4/hqdefault.jpg" alt="2025 Viterbi Awards: Min Family Challenge">
+                        <div class="video-content">
+                            <h2 class="video-title">USC Viterbi Launches School of Advanced Computing</h2>
+                            <p class="video-contribution">Asset Coordination, Production Assistant</p>
+                            <p class="video-date">August 21, 2025</p>
+                        </div>
+                    </a>
+
+                    <a href="https://www.youtube.com/watch?v=uIY74A5T2Ls" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="https://img.youtube.com/vi/uIY74A5T2Ls/hqdefault.jpg" alt="2024 Year in Review">
+                        <div class="video-content">
+                            <h2 class="video-title">2024 Year in Review</h2>
+                            <p class="video-contribution">Asset Coordination</p>
+                            <p class="video-date">April 24, 2025</p>
+                        </div>
+                    </a>
+
+                    <a href="https://www.youtube.com/watch?v=eh5y7kuiQ_w" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="https://img.youtube.com/vi/eh5y7kuiQ_w/hqdefault.jpg" alt="2025 Viterbi Awards: Maseeh Entrepreneurship Prize Competition">
+                        <div class="video-content">
+                            <h2 class="video-title">2025 Viterbi Awards: Maseeh Entrepreneurship Prize Competition</h2>
+                            <p class="video-contribution">Asset Coordination, Camera Operation, Editing</p>
+                            <p class="video-date">April 24, 2025</p>
+                        </div>
+                    </a>
+ 
+                    <a href="https://www.youtube.com/watch?v=XKZfvOl_mBw" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="https://img.youtube.com/vi/XKZfvOl_mBw/hqdefault.jpg" alt="2025 Viterbi Awards: Min Family Challenge">
+                        <div class="video-content">
+                            <h2 class="video-title">2025 Viterbi Awards: Min Family Challenge</h2>
+                            <p class="video-contribution">Asset Coordination, Camera Operation, Editing</p>
+                            <p class="video-date">April 24, 2025</p>
+                        </div>
+                    </a>
+ 
+                    <a href="https://www.youtube.com/watch?v=0ThG3ez1TJc" target="_blank" class="video-card">
+                        <img class="video-thumbnail" src="https://img.youtube.com/vi/0ThG3ez1TJc/maxresdefault.jpg" alt="USC Viterbi in Space: Celebrating the 20th Anniversary of ASTE and RPL">
+                        <div class="video-content">
+                            <h2 class="video-title">USC Viterbi in Space: Celebrating the 20th Anniversary of ASTE and RPL</h2>
+                            <p class="video-contribution">Asset Coordination, Camera Operation</p>
+                            <p class="video-date">February 21, 2025</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section" data-toc="The Dilemma">
             <div class="category-header" onclick="toggleCategory('dilemma')">
                 <h2 class="category-heading">
                    The Dilemma: Extra-Curricular Institutions in China
@@ -502,7 +696,7 @@
             </div>
         </div>
 
-        <div class="category-section">
+        <div class="category-section" data-toc="School Projects">
             <div class="category-header" onclick="toggleCategory('school')">
                 <h2 class="category-heading">
                     School Projects
@@ -595,9 +789,8 @@
                 </div>
             </div>
         </div>
-        
 
-        <div class="category-section">
+        <div class="category-section" data-toc="Personal">
             <div class="category-header" onclick="toggleCategory('personal')">
                 <h2 class="category-heading">
                     Personal Production
@@ -635,63 +828,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="category-section">
-            <div class="category-header" onclick="toggleCategory('viterbi')">
-                <h2 class="category-heading">
-                    Video Editor: USC Viterbi School of Engineering
-                    <button class="category-toggle" id="viterbi-toggle"></button>
-                </h2>
-            </div>
-            <div class="category-content" id="viterbi-content">
-                <div class="video-grid">
-                    <a href="https://www.youtube.com/watch?v=bEGTGDpkfg4" target="_blank" class="video-card">
-                        <img class="video-thumbnail" src="https://img.youtube.com/vi/bEGTGDpkfg4/hqdefault.jpg" alt="2025 Viterbi Awards: Min Family Challenge">
-                        <div class="video-content">
-                            <h2 class="video-title">USC Viterbi Launches School of Advanced Computing</h2>
-                            <p class="video-contribution">Asset Coordination, Prodction Assitant</p>
-                            <p class="video-date">August 21, 2025</p>
-                        </div>
-                    </a>
-
-                    <a href="https://www.youtube.com/watch?v=uIY74A5T2Ls" target="_blank" class="video-card">
-                        <img class="video-thumbnail" src="https://img.youtube.com/vi/uIY74A5T2Ls/hqdefault.jpg" alt="2024 Year in Review">
-                        <div class="video-content">
-                            <h2 class="video-title">2024 Year in Review</h2>
-                            <p class="video-contribution">Asset Coordination</p>
-                            <p class="video-date">April 24, 2025</p>
-                        </div>
-                    </a>
-
-                    <a href="https://www.youtube.com/watch?v=eh5y7kuiQ_w" target="_blank" class="video-card">
-                        <img class="video-thumbnail" src="https://img.youtube.com/vi/eh5y7kuiQ_w/hqdefault.jpg" alt="2025 Viterbi Awards: Maseeh Entrepreneurship Prize Competition">
-                        <div class="video-content">
-                            <h2 class="video-title">2025 Viterbi Awards: Maseeh Entrepreneurship Prize Competition</h2>
-                            <p class="video-contribution">Asset Coordination, Camera Operation, Editing</p>
-                            <p class="video-date">April 24, 2025</p>
-                        </div>
-                    </a>
- 
-                    <a href="https://www.youtube.com/watch?v=XKZfvOl_mBw" target="_blank" class="video-card">
-                        <img class="video-thumbnail" src="https://img.youtube.com/vi/XKZfvOl_mBw/hqdefault.jpg" alt="2025 Viterbi Awards: Min Family Challenge">
-                        <div class="video-content">
-                            <h2 class="video-title">2025 Viterbi Awards: Min Family Challenge</h2>
-                            <p class="video-contribution">Asset Coordination, Camera Operation, Editing</p>
-                            <p class="video-date">April 24, 2025</p>
-                        </div>
-                    </a>
- 
-                    <a href="https://www.youtube.com/watch?v=0ThG3ez1TJc" target="_blank" class="video-card">
-                        <img class="video-thumbnail" src="https://img.youtube.com/vi/0ThG3ez1TJc/maxresdefault.jpg" alt="USC Viterbi in Space: Celebrating the 20th Anniversary of ASTE and RPL">
-                        <div class="video-content">
-                            <h2 class="video-title">USC Viterbi in Space: Celebrating the 20th Anniversary of ASTE and RPL</h2>
-                            <p class="video-contribution">Asset Coordination, Camera Operation</p>
-                            <p class="video-date">February 21, 2025</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
     </div>
     
     <footer class="copyright">
@@ -726,5 +862,6 @@
             });
         }
     </script>
+    <script src="../js/section-toc.js"></script>
 </body>
 </html> 

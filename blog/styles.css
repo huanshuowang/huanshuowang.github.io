@@ -156,6 +156,27 @@
     }
 }
 
+/* ★ 收藏筛选：和普通标签区分开，选中时是黄底而不是黑底 */
+.chip.chip-star {
+    border-color: #f0d98a;
+    color: #8a7400;
+    background: #fffdf2;
+}
+
+.chip.chip-star.is-active {
+    background: #F5C500;
+    border-color: #F5C500;
+    color: #fff;
+}
+
+/* 卡片右上角那颗星，跟日期同一行 */
+.note-star {
+    color: #F5C500;
+    font-size: 13px;
+    margin-left: 8px;
+    letter-spacing: 0;
+}
+
 .chip.is-active {
     background: #F5C500;
     border-color: #F5C500;
@@ -546,9 +567,48 @@ body.modal-open { overflow: hidden; }
     border-left-color: #F5C500;
 }
 
-/* 窄屏放不下侧边栏，收起；语言开关改回标题下面那个 */
+/* 中文标题末行不留单字（末尾两个字由 blog.js 包成一段） */
+.no-orphan { white-space: nowrap; }
+
+/* 窄屏放不下侧边栏：语言开关用标题下面那个，
+   目录由 blog.js 挪到标题下方，改成一条横向吸顶条（同 Work / Filmmaking 页） */
 @media (max-width: 1023px) {
     .article-side { display: none; }
+
+    .article-main > .article-toc {
+        position: sticky;
+        top: 70px;                      /* 导航栏实测就是 70px，写小了会被压在底下 */
+        z-index: 20;
+        margin: 0 0 26px;
+        background: #f5f5f5;
+        border-bottom: 1px solid #e3e3e3;
+    }
+
+    .article-main > .article-toc .toc-label { display: none; }
+
+    .article-main > .article-toc .toc-links {
+        flex-direction: row;
+        gap: 20px;
+        border-left: 0;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .article-main > .article-toc .toc-links::-webkit-scrollbar { display: none; }
+
+    .article-main > .article-toc .toc-link {
+        white-space: nowrap;
+        padding: 11px 0;
+        margin-left: 0;
+        border-left: 0;
+        border-bottom: 2px solid transparent;
+    }
+
+    .article-main > .article-toc .toc-link.is-current {
+        border-left-color: transparent;
+        border-bottom-color: #F5C500;
+    }
 }
 
 @media (min-width: 1024px) {

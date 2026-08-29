@@ -42,14 +42,6 @@
     "date": "2026-08-24"
   },
   {
-    "title": "The Useless Web",
-    "url": "https://theuselessweb.com/",
-    "type": "Fun",
-    "note": "“Take me to another useless website.”",
-    "tags": [],
-    "date": "2026-08-24"
-  },
-  {
     "title": "Claude Academy",
     "url": "https://academy.claude.com/courses",
     "type": "Course",
@@ -164,16 +156,6 @@
     "note": "A job board dedicated to positions in the themed entertainment industry.",
     "tags": [
       "Themed Entertainment"
-    ],
-    "date": "2026-08-24"
-  },
-  {
-    "title": "ASCII Art Generator",
-    "url": "http://www.network-science.de/ascii/",
-    "type": "Fun",
-    "note": "Fun stuff when people actually write HTML line by line — mine is on my contact page.",
-    "tags": [
-      "Creative"
     ],
     "date": "2026-08-24"
   },

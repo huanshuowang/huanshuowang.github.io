@@ -4,26 +4,26 @@
 
 <p class="definition">看懂看板。</p>
 
-| Abbreviation | Full form | English meaning | 中文理解 |
-| --- | --- | --- | --- |
-| DAU | Daily Active Users | Users active in a day. | 日活用户数。 |
-| UV | Unique Visitor | De-duplicated users or creators. | 去重用户 / 去重创作者。 |
-| PV | Page View / Impression Page View | Total non-unique views or exposures. | 非去重浏览 / 曝光次数。 |
-| VV | Video Views | Total video plays. | 视频播放量。 |
-| ACU | Average Concurrent Users | Average simultaneous viewers during a live. | 直播平均同时在线人数。 |
-| NR | Not Recommended | Traffic is not proactively recommended. | 不再被公域主动推荐。 |
-| KYC | Know Your Customer | Individual identity verification. | 个人身份认证。 |
-| KYB | Know Your Business | Business identity verification. | 企业身份认证。 |
-| CTA | Call To Action | A direct prompt telling viewers what to do next. | 引导用户下一步行动的话术。 |
-| CM | Creator Manager | The operator who manages or coaches creators. | 负责管理 / 辅导创作者的运营角色。 |
-| CRM | Customer Relationship Management | A system for storing and managing customer or lead data. | 客户 / 线索关系管理系统。 |
-| DM | Direct Message | Private messaging between viewer and creator. | 私信。 |
-| DFO | Deep Funnel Optimization | Optimization based on deeper conversion outcomes. | 基于深层转化结果的优化。 |
-| RBA | Registered Business Account | Business-account status following business verification. | 企业注册账号状态。 |
-| RC | Reproduced Content | Replayed or non-original content presented as live. | 录播 / 重复 / 非原创直播内容。 |
-| NCA | New Customer Acquisition | A downstream new-customer outcome. | 新客获取结果。 |
-| 1P | First Party | Used in reporting to indicate first-party advertiser or owned-side revenue scope. | 在报表中通常表示第一方广告主或自有侧收入口径。 |
-| Penetration Rate | N/A | The share of an eligible base that has adopted a feature, entered a status, or reached a target condition. | 指某个符合条件的总体中，已经采用某功能、进入某状态或达到某目标条件的占比，也就是"渗透率"。 |
+| Abbreviation | Full form | 中文理解 |
+| --- | --- | --- |
+| DAU | Daily Active Users | 日活用户数。 |
+| UV | Unique Visitor | 去重用户 / 去重创作者。 |
+| PV | Page View / Impression Page View | 非去重浏览 / 曝光次数。 |
+| VV | Video Views | 视频播放量。 |
+| ACU | Average Concurrent Users | 直播平均同时在线人数。 |
+| NR | Not Recommended | 不再被公域主动推荐。 |
+| KYC | Know Your Customer | 个人身份认证。 |
+| KYB | Know Your Business | 企业身份认证。 |
+| CTA | Call To Action | 引导用户下一步行动的话术。 |
+| CM | Creator Manager | 负责管理 / 辅导创作者的运营角色。 |
+| CRM | Customer Relationship Management | 客户 / 线索关系管理系统。 |
+| DM | Direct Message | 私信。 |
+| DFO | Deep Funnel Optimization | 基于深层转化结果的优化。 |
+| RBA | Registered Business Account | 企业注册账号状态。 |
+| RC | Reproduced Content | 录播 / 重复 / 非原创直播内容。 |
+| NCA | New Customer Acquisition | 新客获取结果。 |
+| 1P | First Party | 在报表中通常表示第一方广告主或自有侧收入口径。 |
+| Penetration Rate | N/A | 指某个符合条件的总体中，已经采用某功能、进入某状态或达到某目标条件的占比，也就是"渗透率"。 |
 
 ## 怎么读这些指标
 

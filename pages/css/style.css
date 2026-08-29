@@ -123,13 +123,15 @@ p{
 
 .about-intro-container {
     display: flex;
-    align-items: flex-start;
-    gap: 30px;
+    align-items: stretch;   /* 照片和文字等高，右边不再留空 */
+    gap: 36px;
     margin-bottom: 40px;
 }
 
 .about-text {
-    flex: 1;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 720px;   /* 宽屏时别让一行拉到 100 个字符 */
     text-align: left;
 }
 
@@ -141,8 +143,11 @@ p{
 }
 
 .about-photo {
-    flex: 0 0 300px;
-    height: 400px;
+    /* 跟着容器等比缩放，不再写死 300×400：窗口变窄时照片一起变小，
+       文字列就不会被挤成细长条、照片下面也不会空一大块 */
+    flex: 0 0 clamp(280px, 30%, 360px);   /* 先保证照片够宽，文字去适应剩下的空间 */
+    align-self: stretch;
+    max-height: 560px;                    /* 拉到这个高度就停，避免变成细长条 */
     overflow: hidden;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -152,6 +157,7 @@ p{
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: 45% 42%;   /* 脸在原图纵向约 40%，这样裁切后落在画面偏上 */
 }
 
 /* About page animations */
@@ -185,6 +191,10 @@ p{
 
 .about-text p:nth-child(4) {
     animation-delay: 1.4s;
+}
+
+.about-text p:nth-child(5) {
+    animation-delay: 1.8s;
 }
 
 .about-photo {
@@ -716,4 +726,156 @@ p{
     .video-title {
         font-size: 13px;
     }
+}
+/* ── 页面副目录：吸附标签条 ── */
+.toc-bar {
+    position: sticky;
+    top: 70px;
+    z-index: 800;
+    background: rgba(245, 245, 245, 0.94);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.toc-bar-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 26px;
+    max-width: 1200px;
+    margin: 0 auto;
+    /* 竖向留白全部交给链接自己的 padding，
+       这样高亮的黄线才能落在整条目录的底边上（同 Curiosity Hub） */
+    padding: 0 16px;
+}
+
+.toc-bar a {
+    font-size: 14px;
+    color: #777;
+    text-decoration: none;
+    padding: 11px 0;
+    border-bottom: 2px solid transparent;
+    transition: color 0.18s ease, border-color 0.18s ease;
+}
+
+.toc-bar a:hover { color: #1b1b1b; }
+
+.toc-bar a.on {
+    color: #1b1b1b;
+    font-weight: 600;
+    border-bottom-color: #F5C500;
+}
+
+/* 窄屏放不下就改成横向滚动，不折行 */
+@media (max-width: 760px) {
+    .toc-bar-inner {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 18px;
+        /* 藏掉横向滚动条：手指可以直接拖，多出一条灰杠反而脏 */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .toc-bar-inner::-webkit-scrollbar { display: none; }
+    .toc-bar a { white-space: nowrap; font-size: 13px; }
+}
+
+/* About 区块：1000px 以下改成上下排——再窄下去照片会被挤成细条 */
+@media (max-width: 1000px) {
+    .about-intro-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 22px;                          /* 横排时的 36px 在竖排里显得太空 */
+    }
+
+    .about-text { max-width: 100%; }
+    .about-text p:last-child { margin-bottom: 0; }   /* 末段的下边距和间隙重复了 */
+
+    /* 竖排时先看到人，再读文字 */
+    .about-photo { order: -1; }
+
+    .about-photo {
+        flex: 0 0 auto;
+        align-self: center;
+        /* 和首页那段介绍视频同一套做法：按比例给宽度并封顶居中，
+           不铺满整行，否则刚折行时照片会突然变得很大 */
+        width: 75%;
+        max-width: 700px;
+        max-height: none;
+        aspect-ratio: 16 / 9;
+        margin: 0 auto;
+    }
+}
+
+/* 宽屏不需要这个按钮（必须写在下面的媒体查询之前，否则会盖掉它） */
+.about-more { display: none; }
+
+/* 手机上宽度本来就不富裕，就不再留两侧余白了 */
+@media (max-width: 700px) {
+    .about-photo { width: 100%; }
+
+    /* 手机端自我介绍默认只露第一段，避免要划两屏半才看到下面的卡片。
+       折叠状态由 index.html 里的脚本加 .is-collapsed 控制，宽屏永远不加。 */
+    .about-text.is-collapsed p:not(:first-of-type) { display: none; }
+    .about-text.is-collapsed p:first-of-type { margin-bottom: 0; }
+
+    /* 一条贯穿的细线，文字坐在线中间：既是段落之间的分隔，
+       又明确是个可点的控件——不会和正文里的黄色下划线超链接混淆。 */
+    .about-more {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        width: 100%;
+        margin: 26px 0 0;
+        padding: 6px 0;
+        border: 0;
+        background: none;
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        color: #777;
+        cursor: pointer;
+    }
+
+    /* 文字左右两侧各拉一条线，占满剩余宽度 */
+    .about-more::before,
+    .about-more::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: #dcdcdc;
+    }
+
+    .about-more span {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        white-space: nowrap;
+    }
+
+    /* 用边框拼一个朝下的小 V，比字符箭头对齐更稳 */
+    .about-more span::after {
+        content: '';
+        width: 6px;
+        height: 6px;
+        margin-top: -3px;
+        border-right: 1.5px solid #999;
+        border-bottom: 1.5px solid #999;
+        transform: rotate(45deg);
+    }
+
+    .about-more:active { color: #222; }
+    .about-more:active span::after { border-color: #222; }
+
+    .about-more[aria-expanded="true"] { display: none; }
+}
+
+
+/* 手机端两侧收窄，和 Curiosity Hub 的 16px 对齐（原来容器 20 + 板块 20 = 40，太宽） */
+@media (max-width: 600px) {
+    .links-container { padding: 20px 8px; }
 }

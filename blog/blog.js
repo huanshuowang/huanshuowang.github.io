@@ -7,9 +7,9 @@
    (so every note's reference shows up automatically) plus
    anything listed in links.json on its own.
    Routing is hash-based so it works on plain static hosting:
-     #/links            everything worth keeping a link to (default, sorted A–Z by title)
-     #/notes            the notes list
+     #/notes            the notes list (default)
      #/notes/<slug>     one note
+     #/links            everything worth keeping a link to (sorted A–Z by title)
    ────────────────────────────────────────────────────────────── */
 (function () {
     'use strict';
@@ -34,7 +34,7 @@
         links: [],
         sources: [],
         rendered: [],
-        view: 'links',      // 'links' | 'notes'
+        view: 'notes',      // 'notes' | 'links'
         currentPost: null,
         noteTag: 'All',
         linkType: 'All',
@@ -67,6 +67,15 @@
         return String(s == null ? '' : s)
             .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    // 中文标题换行时只剩一个字很难看。把末尾两个字绑成不可断开的一段，
+    // 最后一行就至少有两个字。西文靠空格断行、末行是完整单词，不用管。
+    function noOrphan(text) {
+        var raw = String(text == null ? '' : text);
+        if (raw.length < 3 || !/[\u4e00-\u9fff]$/.test(raw)) return esc(raw);
+        return esc(raw.slice(0, -2)) +
+            '<span class="no-orphan">' + esc(raw.slice(-2)) + '</span>';
     }
 
     // 卡片描述里允许用 *星号* 打斜体（书名、片名之类），其他内容照常转义
@@ -180,21 +189,27 @@
     }
 
     // ── notes ──────────────────────────────────────────────────
+    var STAR = '\u2605';   // ★ = 收藏，始终排在 All 前面
+
     function renderNoteFilters() {
         var tags = ['All'];
         state.posts.forEach(function (p) {
             (p.tags || []).forEach(function (t) { if (tags.indexOf(t) === -1) tags.push(t); });
         });
+        if (state.posts.some(function (p) { return p.featured; })) tags.unshift(STAR);
         if (tags.length <= 2) { el.noteFilters.innerHTML = ''; return; }  // 只有一个标签就不用筛选了
         el.noteFilters.innerHTML = tags.map(function (t) {
-            return '<button class="chip' + (t === state.noteTag ? ' is-active' : '') +
-                   '" data-tag="' + esc(t) + '">' + esc(t) + '</button>';
+            var star = t === STAR ? ' chip-star' : '';
+            var label = t === STAR ? STAR + ' Featured' : esc(t);
+            return '<button class="chip' + star + (t === state.noteTag ? ' is-active' : '') +
+                   '" data-tag="' + esc(t) + '">' + label + '</button>';
         }).join('');
     }
 
     function renderNotes() {
         var items = state.posts.filter(function (p) {
-            var tagOk = state.noteTag === 'All' || (p.tags || []).indexOf(state.noteTag) !== -1;
+            var tagOk = state.noteTag === 'All' ||
+                        (state.noteTag === STAR ? !!p.featured : (p.tags || []).indexOf(state.noteTag) !== -1);
             return tagOk && matchesQuery([p.title, p.summary, (p.tags || []).join(' ')]);
         });
 
@@ -207,7 +222,8 @@
             var tags = (p.tags || []).map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('');
             return '<a class="note-card reveal" href="#/notes/' + encodeURIComponent(p.slug) + '">' +
                      '<span class="card-arrow" aria-hidden="true">\u2192</span>' +
-                     '<div class="note-date">' + esc(prettyDate(p.date)) + '</div>' +
+                     '<div class="note-date">' + esc(prettyDate(p.date)) +
+                       (p.featured ? '<span class="note-star" title="Featured">' + STAR + '</span>' : '') + '</div>' +
                      '<h2 class="note-title">' + esc(p.title) + '</h2>' +
                      (p.summary ? '<p class="note-summary">' + withEm(p.summary) + '</p>' : '') +
                      (tags ? '<div class="tag-row">' + tags + '</div>' : '') +
@@ -425,6 +441,63 @@
             var target = document.getElementById(a.dataset.target);
             if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
+
+        placeToc();
+        keepCurrentTocVisible();
+    }
+
+    // 窄屏没有左边那栏，把目录挪到标题下面当一条横向吸顶条用，
+    // 和 Work / Filmmaking 两个页面的副目录一致。宽屏再放回侧栏。
+    var tocNarrow = window.matchMedia('(max-width: 1023px)');
+
+    function placeToc() {
+        var head = el.articleHead;
+        var side = document.querySelector('.article-side');
+        if (!head || !side || !el.articleToc) return;
+
+        if (tocNarrow.matches) {
+            if (el.articleToc.previousElementSibling !== head) {
+                head.parentNode.insertBefore(el.articleToc, head.nextSibling);
+            }
+        } else if (el.articleToc.parentNode !== side) {
+            side.appendChild(el.articleToc);   // 排在语言开关后面
+        }
+    }
+
+    if (tocNarrow.addEventListener) tocNarrow.addEventListener('change', placeToc);
+    else if (tocNarrow.addListener) tocNarrow.addListener(placeToc);
+    // matchMedia 的 change 在个别环境里不回调，再挂一个 resize 兜底
+    window.addEventListener('resize', placeToc);
+
+    // 横条放不下时，让高亮的那一项自己滑进可视范围。
+    // 高亮是 IntersectionObserver 打的，没有事件可挂，所以轮询查一下当前项；
+    // 只在真的换了小节时才动，不会和手动横拖打架。定时器全局只起一次。
+    var tocTimer = null;
+
+    function keepCurrentTocVisible() {
+        if (tocTimer) return;
+
+        var seen = null;
+        tocTimer = setInterval(function () {
+            var nav = el.articleToc.querySelector('.toc-links');
+            if (!nav || !tocNarrow.matches || nav.scrollWidth <= nav.clientWidth) return;
+            var a = nav.querySelector('.toc-link.is-current');
+            if (!a || a === seen) return;
+            seen = a;
+
+            var pad = 20;
+            var box = nav.getBoundingClientRect();
+            var r = a.getBoundingClientRect();
+            var left = r.left - box.left + nav.scrollLeft - pad;
+            var right = left + r.width + pad * 2;
+            var to = null;
+            if (left < nav.scrollLeft) to = left;
+            else if (right > nav.scrollLeft + nav.clientWidth) to = right - nav.clientWidth;
+            if (to === null) return;
+
+            // 同上：直接赋值，平滑交给 CSS
+            nav.scrollLeft = Math.max(0, Math.min(to, nav.scrollWidth - nav.clientWidth));
+        }, 250);
     }
 
     // ── article ────────────────────────────────────────────────
@@ -461,7 +534,7 @@
 
         el.articleHead.innerHTML =
             '<div class="article-meta">' + esc(prettyDate(post.date)) + '</div>' +
-            '<h1>' + esc(titleFor(post, lang)) + '</h1>' +
+            '<h1>' + noOrphan(titleFor(post, lang)) + '</h1>' +
             ((post.tags || []).length
                 ? '<div class="tag-row">' + post.tags.map(function (t) {
                       return '<span class="tag">' + esc(t) + '</span>';
@@ -496,7 +569,8 @@
         });
 
         var h1 = el.articleHead.querySelector('h1');
-        if (h1) h1.textContent = titleFor(post, lang);
+        // 用 innerHTML + noOrphan，textContent 会把防孤字的那个 span 抹掉
+        if (h1) h1.innerHTML = noOrphan(titleFor(post, lang));
         document.title = titleFor(post, lang) + ' — Curiosity Hub — Happy\'s Website';
 
         el.articleBody.innerHTML = '<p class="blog-empty">Loading…</p>';
@@ -557,10 +631,10 @@
 
         if (parts[0] === 'notes' && parts[1]) {
             showArticle(decodeURIComponent(parts[1]));
-        } else if (parts[0] === 'notes') {
-            showList('notes');
+        } else if (parts[0] === 'links' || parts[0] === 'library') {   // 旧的 #/library 链接继续可用
+            showList('links');
         } else {
-            showList('links');   // 默认就是 Links；旧的 #/library 链接落到这里也没问题
+            showList('notes');   // 默认是 Notes
         }
     }
 

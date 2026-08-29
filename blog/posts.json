@@ -5,12 +5,12 @@
     "date": "2026-08-26",
     "summary": "A glossary of terms and related knowledge that I built during an operations internship at a major tech company.",
     "tags": [
-      "Operations",
-      "Data"
+      "Original"
     ],
     "file": "2026-08-26-ops-metrics-terminology.md",
     "file_zh": "2026-08-26-ops-metrics-terminology.zh.md",
-    "title_zh": "直播留资运营词汇表和指标参考"
+    "title_zh": "直播留资运营词汇表和指标参考",
+    "featured": true
   },
   {
     "slug": "laws-of-ux",
@@ -18,7 +18,7 @@
     "date": "2026-08-26",
     "summary": "Laws of UX is a collection of best practices that designers can consider when building user interfaces.",
     "tags": [
-      "UX"
+      "Excerpt"
     ],
     "file": "2026-08-26-laws-of-ux.md",
     "source": {
@@ -38,14 +38,17 @@
     "date": "2026-08-25",
     "summary": "Ten guidelines to theme park design developed by Walt Disney Imagineering President Marty Sklar.",
     "tags": [
-      "Themed Entertainment"
+      "Excerpt"
     ],
     "file": "2026-08-25-mickeys-10-commandments.md",
     "source": {
       "title": "Mickey's 10 Commandments – Marty Sklar",
       "url": "https://www.themedattraction.com/mickeys-10-commandments-marty-sklar/",
       "type": "Article",
-      "note": "Ten guidelines to theme park design developed by Walt Disney Imagineering President Marty Sklar."
+      "note": "Ten guidelines to theme park design developed by Walt Disney Imagineering President Marty Sklar.",
+      "tags": [
+        "Themed Entertainment"
+      ]
     }
   }
 ]

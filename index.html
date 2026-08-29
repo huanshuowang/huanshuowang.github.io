@@ -20,6 +20,15 @@
                 opacity: 0;
                 transform: translateY(24px);
             }
+            /* 卡片本身保持全白，颜色只出现在标题下的一小段线上 */
+            #content-cards .content-description h2 {
+                display: inline-block;
+                padding-bottom: 6px;
+                border-bottom: 3px solid #F5C500;
+            }
+            #content-cards .content-card:nth-child(2) h2 { border-bottom-color: #2c84bc; }
+            #content-cards .content-card:nth-child(3) h2 { border-bottom-color: #2cab64; }
+            #content-cards .content-card:nth-child(4) h2 { border-bottom-color: #fa4483; }
             @media (prefers-reduced-motion: reduce) {
                 #content-cards .content-card:not(.in) { transform: none; }
             }
@@ -30,7 +39,8 @@
             <a href="index.html"><img class="nav-logo" src="img/happylogo.png" width="50px" alt="Happy Logo"></a>
             <ul>
                 <li><a href="#about">About</a></li>
-                <li><a href="pages/portfolio.html">Portfolio</a></li>
+                <li><a href="pages/portfolio.html">Work</a></li>
+                <li><a href="blog/index.html">Blog</a></li>
                 <li><a href="pages/contact.html">Contact</a></li>
             </ul>
         </div>
@@ -74,13 +84,16 @@
             
             <div class="about-intro-container">
                 <div class="about-text">
-                    <p>Hi there! I'm <strong>Happy Wang (王欢烁)</strong>, a USC student majoring in Business of Cinematic Arts and minoring in User Experience. My passion lies at the intersection of storytelling, marketing, and creating immersive experiences that connect audiences around the globe.</p>
+                    <p>Hi there! I'm <strong>Happy Wang (王欢烁)</strong>, a USC student majoring in Business of Cinematic Arts and minoring in User Experience. <strong>I'm a storyteller and a translator of strategy, insights, and creativity.</strong> I take things that are complicated or messy and turn them into something people can understand, and stories they can feel.</p>
                     
-                    <p>It begins with my love for film. In high school, I independently produced a 15-minute documentary selected by multiple film festivals. Along the way, I've spent over eight years as a content creator, filming vlogs, writing blogs and reviews, and exploring photography and design.</p>
+                    <p>It begins with my love for film: in high school, I independently produced a 15-minute documentary selected by multiple film festivals, and I've spent over eight years as a content creator, filming vlogs, writing blogs and reviews, and exploring photography and design.</p>
                     
-                    <p>At USC, I've grown especially drawn to understanding and optimizing user experience, which is also why I'm so fascinated by themed entertainment. There's something magical about learning what visitors truly want and turning that into memorable, lasting experiences. Looking ahead, I hope to build a career in marketing strategy, where creativity, data, and human insight come together to shape how audiences connect with brands and stories.</p>
+                    <p>Over time, my curiosity moved backstage. <strong>I've come to love the unglamorous half of the work</strong>: building communities, planning campaigns across markets, and reading the numbers to find out what actually landed. What I like most is spotting the part that isn't working and making it better. When the process itself became the bottleneck, I built the tool that fixed it.</p>
                     
-                    <p>Outside of these pursuits, you'll often find me traveling, enjoying stand-up comedy (I'm a huge fan!), watching musicals, exploring museums and <a href="pages/themeparks.html" style="color: inherit;">theme parks</a>, or experimenting with Chinese recipes in my kitchen.</p>
+                    <p>The same instinct draws me to themed entertainment and user experience: both come down to learning what people truly want, then shaping every detail until they feel it. Whatever I work on next, I want it to sit where creativity, data, and human insight meet.</p>
+                    
+                    <p>Outside of these pursuits, you'll often find me traveling, enjoying stand-up comedy, watching musicals, exploring museums and theme parks, or experimenting with recipes in my kitchen.</p>
+                    <button type="button" class="about-more" aria-expanded="false"><span>Read more about me</span></button>
                 </div>
                 
                 <div class="about-photo">
@@ -105,15 +118,11 @@
                 <div class="content-card">
                     <div class="content-description">
                         <h2>Explore My Work</h2>
-                        <p>Click below to see my work experiences, club responsbilities, and filmmaking, marketing, and art portfolios.</p>
-                        <a href="pages/portfolio.html" class="card-button">Click here to see my portfolio →</a>
-                    </div>
-                </div>
-                <div class="content-card">
-                    <div class="content-description">
-                        <h2>Projects by Happy</h2>
-                        <p>A collection of useful and fun things I've built.</p>
-                        <a href="projects-by-happy/index.html" class="card-button">Explore Projects by Happy →</a>
+                        <p>Click below to see my work experiences, club responsibilities, and filmmaking, marketing, and art portfolios.</p>
+                        <div class="button-group">
+                            <a href="pages/portfolio.html" class="card-button">My Portfolio →</a>
+                            <a href="pages/portfolio.html#work-experience" class="card-button">My Work Experience →</a>
+                        </div>
                     </div>
                 </div>
                 <div class="content-card">
@@ -125,7 +134,14 @@
                 </div>
                 <div class="content-card">
                     <div class="content-description">
-                        <h2>Themed Park Passport</h2>
+                        <h2>Projects by Happy</h2>
+                        <p>A collection of useful and fun things I've built.</p>
+                        <a href="projects-by-happy/index.html" class="card-button">Explore Projects by Happy →</a>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <div class="content-description">
+                        <h2>Theme Park Passport</h2>
                         <p>Explore my theme park passport with favorite rides and personal notes from every visit.</p>
                         <div class="button-group">
                             <a href="pages/themeparks.html" class="card-button">Explore My Park Passport →</a>
@@ -215,7 +231,7 @@
                     return audioCtx;
                 }
                 const faceSwapSound = new Audio('pages/img/mouse-hovering-sounds-btn-hover-sound.flac');
-                faceSwapSound.volume = 0.5;
+                faceSwapSound.volume = 0.15;
                 function playFaceSwapSound() {
                     faceSwapSound.currentTime = 0;
                     faceSwapSound.play().catch(() => {});
@@ -230,7 +246,7 @@
                             osc.type = 'triangle';
                             osc.frequency.setValueAtTime(880 - delay * 400, ac.currentTime + delay);
                             osc.frequency.exponentialRampToValueAtTime(220, ac.currentTime + delay + 0.3);
-                            gain.gain.setValueAtTime(0.22, ac.currentTime + delay);
+                            gain.gain.setValueAtTime(0.06, ac.currentTime + delay);
                             gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + delay + 0.35);
                             osc.start(ac.currentTime + delay);
                             osc.stop(ac.currentTime + delay + 0.35);
@@ -278,23 +294,38 @@
                     }
                 });
 
-                // ── "Nice to meet you!" hover fireworks ───────────────
-                const greeting = document.querySelector('#intro h1');
-                if (greeting) {
-                    greeting.style.cursor = 'default';
-                    let lastBurst = 0; // 冷却：鼠标反复扫过时不要连环放烟花
-                    greeting.addEventListener('mouseenter', function() {
-                        const now = Date.now();
-                        if (now - lastBurst < 1200) return;
-                        lastBurst = now;
-                        const r = greeting.getBoundingClientRect();
-                        const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-                        siteFireworks(cx, cy, 55);
-                        siteFireworks(cx - 80, cy + 30, 20);
-                        siteFireworks(cx + 80, cy + 30, 20);
-                    });
-                }
             });
+        </script>
+
+        <script>
+            // 自我介绍在手机上默认只露第一段，点开看全文。
+            // 只在窄屏折叠——宽屏一直是完整四段，不受影响。
+            (function () {
+                var text = document.querySelector('.about-text');
+                var btn = text && text.querySelector('.about-more');
+                if (!text || !btn) return;
+
+                var narrow = window.matchMedia('(max-width: 700px)');
+
+                function sync() {
+                    if (narrow.matches && btn.getAttribute('aria-expanded') === 'false') {
+                        text.classList.add('is-collapsed');
+                    } else {
+                        text.classList.remove('is-collapsed');
+                    }
+                }
+
+                btn.addEventListener('click', function () {
+                    btn.setAttribute('aria-expanded', 'true');
+                    text.classList.remove('is-collapsed');
+                });
+
+                // 老一点的 Safari 只有 addListener
+                if (narrow.addEventListener) narrow.addEventListener('change', sync);
+                else narrow.addListener(sync);
+
+                sync();
+            })();
         </script>
     </body>
 </html>

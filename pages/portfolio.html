@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Happy's Website</title>
+    <title>Work - Happy's Website</title>
     <link rel="icon" type="image/png" href="../img/happylogonav.png">
     <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -31,6 +31,30 @@
             transition: color 0.3s ease;
         }
         
+        /* 卡片压扁：原来一屏只放得下一张，现在接近两张 */
+        .content-card { margin-bottom: 22px; }
+        .content-card .content-media { min-height: 0; height: 220px; background: #fff; }
+        /* 图片卡：右栏宽度按图片比例收，不再出现上下或左右白边 */
+        .content-card .content-media img { width: 100%; height: 100%; object-fit: cover; }
+        .content-card .content-media:has(img) { flex: 0 0 auto; max-width: 52%; }
+        .content-card .content-media:has(img) img { width: auto; height: 100%; object-fit: contain; }
+        /* Canva 嵌入是 16:9，右栏宽度按 16:9 给足，整页 PPT 才不会被切上下 */
+        .content-card .content-media:has(.canva-embed) { flex: 0 0 auto; width: calc(220px * 16 / 9); }
+        .content-card .content-media .canva-embed { height: 100%; padding-top: 0; border-radius: 0; box-shadow: none; }
+
+        /* Projects by Happy 那张特色卡也跟着压扁，别比邻居高一大截 */
+        .content-card .content-description { padding: 22px 26px; }
+        .content-card .content-description p { font-size: 15px; line-height: 1.55; margin-bottom: 14px; }
+        .content-card .content-description h2 { font-size: 21px; margin-bottom: 10px; }
+
+        @media (max-width: 768px) {
+            .content-card .content-media { height: auto; }
+            .content-card .content-media:has(img) { max-width: 100%; }
+            .content-card .content-media:has(img) img { width: 100%; height: 180px; object-fit: cover; }
+            .content-card .content-media:has(.canva-embed) { width: 100%; }
+            .content-card .content-media .canva-embed { height: 0; padding-top: 56.25%; }
+        }
+
         .category-heading {
             font-size: 26px;
             font-weight: 500;
@@ -166,8 +190,8 @@
             }
             
             .work-logo {
-                height: 80px;
-                width: 80px;
+                height: 120px;
+                width: 120px;
             }
             
             .work-content {
@@ -201,8 +225,8 @@
         
         @media (max-width: 480px) {
             .work-logo {
-                height: 60px;
-                width: 60px;
+                height: 100px;
+                width: 100px;
             }
             
             .work-company {
@@ -236,8 +260,8 @@
             background-size: 22px 22px;
             border: 1px solid #e7e9ee;
             border-radius: 16px;
-            padding: 48px 46px;
-            margin-bottom: 40px;
+            padding: 28px 32px;
+            margin-bottom: 22px;
             overflow: hidden;
             text-align: center;
             transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
@@ -262,11 +286,11 @@
         }
 
         .pbh-brand {
-            font-size: 42px;
+            font-size: 32px;
             font-weight: 800;
             letter-spacing: -0.03em;
             line-height: 1.05;
-            margin-bottom: 14px;
+            margin-bottom: 8px;
             color: #101418;
         }
 
@@ -274,12 +298,12 @@
         .pbh-dot { color: #e8552d; }
 
         .pbh-lead {
-            font-size: 17px;
-            line-height: 1.65;
+            font-size: 15px;
+            line-height: 1.55;
             color: #5f6672;
             font-weight: 300;
             max-width: 640px;
-            margin: 0 auto 26px;
+            margin: 0 auto 18px;
             text-align: center;
         }
 
@@ -321,6 +345,30 @@
         .links-container .content-card:nth-child(4) { animation-delay: 0.4s !important; }
         .links-container .content-card:nth-child(5) { animation-delay: 0.5s !important; }
         .links-container .content-card:nth-child(6) { animation-delay: 0.6s !important; }
+    
+        /* 手机端卡片更贴边（写在最后，避免被上面的媒体查询盖掉） */
+        @media (max-width: 600px) {
+            .category-content { padding: 0 8px 20px 8px; }
+            .category-content.collapsed { padding: 0 8px; }
+            /* 卡片本身还带 15px 左右外边距，一起去掉才真的贴边（上下保留） */
+            .links-container .content-card { margin-left: 0; margin-right: 0; }
+        }
+
+    
+        /* 板块标题到第一个条目的间距，统一成卡片之间的 22px。
+           .content-cards 自带 60px 上边距（首页那边要用），这里清掉。 */
+        .links-container .content-cards { margin-top: 0; }
+
+        /* 标题自己的下边距已经撑开一部分，这里不再另加。
+           标题栏 8px 内边距 + 1px 下边线 + 13px 外边距 = 22px，
+           正好等于卡片之间的间距。 */
+        .links-container .category-content { padding-top: 0; }
+        .links-container .category-header { margin-bottom: 13px; }
+
+        .links-container .content-cards > .content-card:first-child,
+        .links-container .content-cards > .pbh-card:first-child,
+        .links-container .category-content > .work-item:first-child { margin-top: 0; }
+
     </style>
 </head>
 <body>
@@ -328,23 +376,74 @@
         <a href="../index.html"><img class="nav-logo" src="../img/happylogo.png" width="50px" alt="Happy Logo"></a>
         <ul>
             <li><a href="../index.html#about">About</a></li>
-            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="portfolio.html">Work</a></li>
+            <li><a href="../blog/index.html">Blog</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
     </div>
 
     <div class="links-container">
-        <h1>Portfolio</h1>
+        <h1>Work</h1>
         
         <div class="category-section">
             <div class="category-header" onclick="toggleCategory('creative')">
                 <h2 class="category-heading">
-                    Creative Works
+                    Portfolio
                     <button class="category-toggle" id="creative-toggle"></button>
                 </h2>
             </div>
             <div class="category-content" id="creative-content">
-                <div class="content-cards" id="content-cards">
+                <div class="content-cards">
+                    <div class="content-card">
+                        <div class="content-description">
+                            <h2>Filmmaking Portfolio</h2>
+                            <p>A collection of video works I'm proud to share — from documentary storytelling and school collaborations to professional editing for USC Viterbi and personal passion projects. Each piece reflects my growth as a filmmaker and editor across different styles and stories.</p>
+                            <a href="videos.html" class="card-button">View My Video Works →</a>
+                        </div>
+                        <div class="content-media">
+                            <img src="img/filmmaking portfolio.png" alt="Filmmaking Portfolio">
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="content-description">
+                            <h2>Marketing Portfolio</h2>
+                            <p>Explore my marketing portfolio featuring campaigns, strategies, and skill highlights from my internships, a student club, and personal projects.</p>
+                            <a href="https://happywang.my.canva.site/" target="_blank" class="card-button">View Marketing Portfolio →</a>
+                        </div>
+                        <div class="content-media">
+                            <div class="canva-embed">
+                                <iframe loading="lazy" src="https://www.canva.com/design/DAGTyDyE-YE/LprNoKLmOtNkA-3h6q-P6Q/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="content-description">
+                            <h2>Art Portfolio</h2>
+                            <p>A showcase of my visual work including graphic design, architecture, oil paintings and all forms of art projects.</p>
+                            <a href="https://happywang.my.canva.site/art-portfolio" target="_blank" class="card-button">View Art Portfolio →</a>
+                        </div>
+                        <div class="content-media">
+                            <div class="canva-embed">
+                                <iframe loading="lazy" src="https://www.canva.com/design/DAGkjGCYfjg/fuE6XyVPJG8eqRgAxUz45w/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="category-section">
+            <div class="category-header" onclick="toggleCategory('built')">
+                <h2 class="category-heading">
+                    Things I Built
+                    <button class="category-toggle" id="built-toggle"></button>
+                </h2>
+            </div>
+            <div class="category-content" id="built-content">
+                <div class="content-cards">
                     <a class="pbh-card" href="../projects-by-happy/index.html" target="_blank">
                         <div class="pbh-brand">Projects <span class="pbh-by">by</span> Happy<span class="pbh-dot">.</span></div>
                         <p class="pbh-lead">Some fun things and ideas — a home for everything I've built, useful or just fun, with the thinking behind each one. Because the meaning of life is to think and tinker!</p>
@@ -362,54 +461,6 @@
                         </div>
                     </div>
 
-                    <div class="content-card">
-                        <div class="content-description">
-                            <h2>Filmmaking Portfolio</h2>
-                            <p>A collection of video works I'm proud to share — from documentary storytelling and school collaborations to professional editing for USC Viterbi and personal passion projects. Each piece reflects my growth as a filmmaker and editor across different styles and stories.</p>
-                            <a href="videos.html" target="_blank" class="card-button">View My Video Works →</a>
-                        </div>
-                        <div class="content-media">
-                            <img src="img/filmmaking portfolio.png" alt="Filmmaking Portfolio">
-                        </div>
-                    </div>
-                    
-                    <div class="content-card">
-                        <div class="content-description">
-                            <h2>Marketing Portfolio</h2>
-                            <p>Explore my marketing portfolio featuring campaigns, strategies, and skill highlights from my internships, a student club, and personal projects.</p>
-                            <a href="https://happywang.my.canva.site/" target="_blank" class="card-button">View Marketing Portfolio →</a>
-                        </div>
-                        <div class="content-media">
-                            <div class="canva-embed">
-                                <iframe loading="lazy" src="https://www.canva.com/design/DAGTyDyE-YE/LprNoKLmOtNkA-3h6q-P6Q/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="content-card">
-                        <div class="content-description">
-                            <h2>Art Portfolio</h2>
-                            <p>A showcase of my visual work including graphic design, architecture, oil paintings and all forms of art projects.</p>
-                            <a href="https://happywang.my.canva.site/art-portfolio" target="_blank" class="card-button">View Art Portfolio →</a>
-                        </div>
-                        <div class="content-media">
-                            <div class="canva-embed">
-                                <iframe loading="lazy" src="https://www.canva.com/design/DAGkjGCYfjg/fuE6XyVPJG8eqRgAxUz45w/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="content-card">
-                        <div class="content-description">
-                            <h2>Video Channel </h2>
-                            <p>This is my video website showing all my work as a video content creator since 2018. Visit my Bilibili channel where I share content focused on Chinese culture, entertainment, and my creative journey.</p>
-                            <a href="https://space.bilibili.com/135346247" target="_blank" class="card-button">Visit <img src="img/Bilibililogo.png" alt="Bilibililogo" class="inline-logo"> →</a>
-                        </div>
-                        <div class="content-media">
-                            <img src="img/bilibili.jpeg" alt="Bilibili Channel">
-                        </div>
-                    </div>
-                    
                     <div class="content-card" id="website-design-card">
                         <div class="content-description">
                             <h2>Website Design</h2>
@@ -424,7 +475,7 @@
             </div>
         </div>
 
-        <div class="category-section">
+        <div class="category-section" id="work-experience" style="scroll-margin-top: 90px;">
             <div class="category-header" onclick="toggleCategory('work')">
                 <h2 class="category-heading">
                     Work Experience
@@ -432,12 +483,20 @@
                 </h2>
             </div>
             <div class="category-content" id="work-content">
-                <div><br></div>
+                <div class="work-item">
+                    <img src="img/USCMarshalllogo.png" alt="USC Marshall" class="work-logo">
+                    <div class="work-content">
+                        <div class="work-company"><a href="https://www.marshall.usc.edu/trojan-network/career-services" target="_blank">USC Marshall Career Services</a> <span class="work-position">| Peer Career Advisor</span></div>
+                        <div class="work-time">August 2026-Present</div>
+                        <div class="work-description">As one of the 7 career advisors hired by Marshall Career Services, I advise fellow undergraduates 1-on-1 on resumes, cover letters, LinkedIn profiles, and interview prep; I also help run career workshops and events!</div>
+                    </div>
+                </div>
+
                 <div class="work-item">
                     <img src="img/tiktoklogo.png" alt="TikTok" class="work-logo">
                     <div class="work-content">
-                        <div class="work-company"><a href="https://www.tiktok.com/about?lang=en" target="_blank">TikTok</a> <span class="work-position" target="_blank">| User Product Operations Intern</span></div>
-                        <div class="work-time">March 2026-Present</div>
+                        <div class="work-company"><a href="https://www.tiktok.com/@tiktokserviceplus" target="_blank">TikTok</a> <span class="work-position" target="_blank">| User Product Operations Intern</span></div>
+                        <div class="work-time">March 2026-August 2026</div>
                         <div class="work-description">I help small and medium businesses grow on TikTok LIVE — supporting initiatives around the Service+ feature and livestream performance to turn audiences into clients.</div>
                     </div>
                 </div>
@@ -487,6 +546,15 @@
                         <div class="work-description">I edited 50+ educational videos (with bilingual subtitles!) and refreshed IvyMind's visual identity by redesigning logos (I made the logo on the left), Powerpoint templates, and social media banners.</div>
                     </div>
                 </div>
+
+                <div class="work-item">
+                    <img src="img/questlogo.png" alt="Quest Program" class="work-logo">
+                    <div class="work-content">
+                        <div class="work-company"><a href="https://www.linkedin.com/company/questprogram" target="_blank">Quest 奇旅计划</a> <span class="work-position">| Co-Founder, Social Media Manager & Speaker</span></div>
+                        <div class="work-time">2023</div>
+                        <div class="work-description">I co-founded an educational consulting program to support Chinese international students through workshops and mentorship. We connected with 100+ students and recruited 10+ speakers and instructors, combining storytelling, community, and design to make education more easy.</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -498,26 +566,6 @@
                 </h2>
             </div>
             <div class="category-content" id="club-content">
-                <div><br></div>
-                <div class="work-item">
-                    <img src="img/MEAlogo.png" alt="USC Marshall Entertainment Association" class="work-logo">
-                    <div class="work-content">
-                        <div class="work-company"><a href="https://www.instagram.com/uscmea/" target="_blank">USC Marshall Entertainment Association (MEA)</a> <span class="work-position">| Co-Vice President of Social Media/Communications</span></div>
-                        <div class="work-time">September 2023 - May 2026</div>
-                        <div class="work-description">I help connect Trojans who share a love for the intersection of business and entertainment through creative storytelling and design.</div>
-                    </div>
-                </div>
-                
-                <div class="work-item">
-                    <img src="img/usccssaLogo.png" alt="USC Chinese Students & Scholars Association" class="work-logo">
-                    <div class="work-content">
-                        <div class="work-company"><a href="https://www.linkedin.com/company/usccssa/" target="_blank">USC Chinese Students & Scholars Association (CSSA)</a> <span class="work-position">| Director of Human Resources</span></div>
-                        <div class="work-time">January 2024 - Present</div>
-                        <div class="work-description">I oversee recruitment and semi-annual team-building events for 160+ members, manage interview rounds, and make sure all 10 departments are supported and connected.<br>
-                        Beyond logistics, I focus on building a warm, inclusive community for Chinese students to feel at home at USC.</div>
-                    </div>
-                </div>
-                
                 <div class="work-item">
                     <img src="img/Annenbergmedialogo.png" alt="USC Annenberg Media" class="work-logo">
                     <div class="work-content">
@@ -528,32 +576,32 @@
                 </div>
                 
                 <div class="work-item">
+                    <img src="img/MEAlogo.png" alt="USC Marshall Entertainment Association" class="work-logo">
+                    <div class="work-content">
+                        <div class="work-company"><a href="https://www.instagram.com/uscmea/" target="_blank">USC Marshall Entertainment Association (MEA)</a> <span class="work-position">| Co-Vice President of Social Media/Communications</span></div>
+                        <div class="work-time">September 2023 - May 2026</div>
+                        <div class="work-description">I help connect Trojans who share a love for the intersection of business and entertainment through creative storytelling and design.</div>
+                    </div>
+                </div>
+
+                <div class="work-item">
+                    <img src="img/usccssaLogo.png" alt="USC Chinese Students & Scholars Association" class="work-logo">
+                    <div class="work-content">
+                        <div class="work-company"><a href="https://www.linkedin.com/company/usccssa/" target="_blank">USC Chinese Students & Scholars Association (CSSA)</a> <span class="work-position">| Director of Human Resources</span></div>
+                        <div class="work-time">January 2024 - Present</div>
+                        <div class="work-description">I oversee recruitment and semi-annual team-building events for 160+ members, manage interview rounds, and make sure all 10 departments are supported and connected.<br>
+                        Beyond logistics, I focus on building a warm, inclusive community for Chinese students to feel at home at USC.</div>
+                    </div>
+                </div>
+
+                
+                <div class="work-item">
                     <img src="img/acesstudiologo.png" alt="Shenzhen Middle School ACES Studio" class="work-logo">
                     <div class="work-content">
                         <div class="work-company"><a href="https://space.bilibili.com/43563875" target="_blank">Shenzhen Middle School ACES Studio</a> <span class="work-position">| President</span></div>
                         <div class="work-time">September 2020 – May 2022</div>
                         <div class="work-description">I led an 18-member executive board and 91 members to produce 21 <a href="https://www.bilibili.com/video/BV1fZ4y1X7bH/" target="_blank">short films</a>, reaching 11M+ total views and adding 2,000+ new subscribers to our channel. We also launched a public class series and live-streaming system to boost engagement and visibility.<br>
                         Our team was recognized as one of the school's Top 10 Clubs (十佳社团) and Outstanding Teams — one of only five groups to earn the honor.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="category-section">
-            <div class="category-header" onclick="toggleCategory('projects')">
-                <h2 class="category-heading">
-                    Projects
-                    <button class="category-toggle" id="projects-toggle"></button>
-                </h2>
-            </div>
-            <div class="category-content" id="projects-content">
-                <div><br></div>
-                <div class="work-item">
-                    <img src="img/questlogo.png" alt="Quest Program" class="work-logo">
-                    <div class="work-content">
-                        <div class="work-company"><a href="https://www.linkedin.com/company/questprogram" target="_blank">Quest 奇旅计划</a> <span class="work-position">| Co-Founder, Social Media Manager & Speaker</span></div>
-                        <div class="work-time">2023</div>
-                        <div class="work-description">I co-founded an educational consulting program to support Chinese international students through workshops and mentorship. We connected with 100+ students and recruited 10+ speakers and instructors, combining storytelling, community, and design to make education more easy.</div>
                     </div>
                 </div>
             </div>
@@ -593,6 +641,7 @@
         }
     </script>
 
+    <script src="../js/section-toc.js"></script>
 </body>
 </html>
 

@@ -68,7 +68,8 @@
         <a href="../index.html"><img class="nav-logo" src="../img/happylogo.png" width="50px" alt="Happy Logo"></a>
         <ul>
             <li><a href="../index.html#about">About</a></li>
-            <li><a href="../pages/portfolio.html">Portfolio</a></li>
+            <li><a href="../pages/portfolio.html">Work</a></li>
+            <li><a href="index.html">Blog</a></li>
             <li><a href="../pages/contact.html">Contact</a></li>
         </ul>
     </div>
@@ -84,25 +85,25 @@
 
             <div class="blog-toolbar">
                 <div class="blog-tabs" role="tablist">
-                    <button class="blog-tab is-active" role="tab" data-view="links" aria-selected="true">Links</button>
-                    <button class="blog-tab" role="tab" data-view="notes" aria-selected="false">Notes</button>
+                    <button class="blog-tab is-active" role="tab" data-view="notes" aria-selected="true">Notes</button>
+                    <button class="blog-tab" role="tab" data-view="links" aria-selected="false">Links</button>
                 </div>
                 <div class="blog-search">
                     <input type="search" id="blog-search-input" placeholder="Search titles, notes, tags…" aria-label="Search the learning log">
                 </div>
             </div>
 
+            <!-- Notes -->
+            <div class="blog-panel" id="panel-notes">
+                <div class="filter-row" id="notes-filters"></div>
+                <div class="note-list" id="note-list"><p class="blog-empty">Loading…</p></div>
+            </div>
+
             <!-- Links -->
-            <div class="blog-panel" id="panel-links">
+            <div class="blog-panel" id="panel-links" hidden>
                 <p class="panel-intro">The sources behind my notes, plus the courses, websites, and tools I want to keep around.</p>
                 <div class="filter-row" id="links-filters"></div>
                 <div class="link-grid" id="link-list"><p class="blog-empty">Loading…</p></div>
-            </div>
-
-            <!-- Notes -->
-            <div class="blog-panel" id="panel-notes" hidden>
-                <div class="filter-row" id="notes-filters"></div>
-                <div class="note-list" id="note-list"><p class="blog-empty">Loading…</p></div>
             </div>
         </section>
 

@@ -21,7 +21,8 @@
         <a href="../index.html"><img class="nav-logo" src="../img/happylogo.png" width="50px"></a>
         <ul>
             <li><a href="../index.html#about">About</a></li>
-            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="portfolio.html">Work</a></li>
+            <li><a href="../blog/index.html">Blog</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
     </div>
@@ -55,7 +56,7 @@
         // 仅在真正支持 hover 的设备上启用音效（触屏点按会触发假 mouseenter）
         if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
             const hoverSound = new Audio('img/tunetank.com_menu-interface-selection.wav');
-            hoverSound.volume = 0.5;
+            hoverSound.volume = 0.15;
             document.querySelectorAll('.contact-item').forEach(el => {
                 el.addEventListener('mouseenter', () => {
                     hoverSound.currentTime = 0;

@@ -123,3 +123,63 @@
     font-family: sfpro, Arial, sans-serif;
     font-weight: 300;
 } 
+/* ── 页面副目录：吸附标签条 ── */
+.toc-bar {
+    position: sticky;
+    top: 70px;
+    z-index: 800;
+    background: rgba(245, 245, 245, 0.94);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.toc-bar-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 26px;
+    max-width: 1200px;
+    margin: 0 auto;
+    /* 竖向留白全部交给链接自己的 padding，
+       这样高亮的黄线才能落在整条目录的底边上（同 Curiosity Hub） */
+    padding: 0 16px;
+}
+
+.toc-bar a {
+    font-size: 14px;
+    color: #777;
+    text-decoration: none;
+    padding: 11px 0;
+    border-bottom: 2px solid transparent;
+    transition: color 0.18s ease, border-color 0.18s ease;
+}
+
+.toc-bar a:hover { color: #1b1b1b; }
+
+.toc-bar a.on {
+    color: #1b1b1b;
+    font-weight: 600;
+    border-bottom-color: #F5C500;
+}
+
+/* 窄屏放不下就改成横向滚动，不折行 */
+@media (max-width: 760px) {
+    .toc-bar-inner {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 18px;
+        /* 藏掉横向滚动条：手指可以直接拖，多出一条灰杠反而脏 */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .toc-bar-inner::-webkit-scrollbar { display: none; }
+    .toc-bar a { white-space: nowrap; font-size: 13px; }
+}
+
+/* 手机端两侧收窄，和 Curiosity Hub 的 16px 对齐（原来容器 20 + 板块 20 = 40，太宽） */
+@media (max-width: 600px) {
+    .links-container { padding: 20px 8px; }
+}

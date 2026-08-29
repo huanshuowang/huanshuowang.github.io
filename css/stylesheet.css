@@ -202,7 +202,8 @@ h2 {
     .home-container {
         flex-direction: column;
         text-align: center;
-        padding: 20px;
+        /* 竖排时标题紧贴导航栏，上方多留一点气口 */
+        padding: 55px 20px 20px;
         margin-top: 10px;
     }
     
@@ -214,15 +215,15 @@ h2 {
     
     .happyface-container {
         width: 100%;
-        max-width: 400px;
-        margin: 20px auto;
+        max-width: 300px;
+        margin: 10px auto;
         display: flex;
         justify-content: center;
         align-items: center;
     }
     
     .spacer {
-        height: 15vh;
+        height: 8vh;
     }
 }
 
@@ -232,7 +233,7 @@ h2 {
     }
     
     .spacer {
-        height: 10vh;
+        height: 4vh;
     }
     
     .intro-line {
@@ -268,9 +269,9 @@ h2 {
     
     .happyface-container {
         width: 100%;
-        max-width: 300px;
+        max-width: 210px;
         height: auto;
-        margin: 30px auto;
+        margin: 10px auto;
         position: relative;
         display: flex;
         justify-content: center;
@@ -329,7 +330,8 @@ h2 {
 /* 换脸逻辑全部由 JS（mouseenter 随机换脸）控制，旧的 :hover 规则会被内联样式覆盖，已清理 */
 
 .spacer {
-    height: 25vh;
+    /* 头像贴纸和 "Nice to meet you!" 之间的留白：跟随窗口高度，但设上下限 */
+    height: clamp(24px, 7vh, 80px);
     width: 100%;
 }
 
@@ -735,8 +737,8 @@ a:hover{
 
 @media (max-width: 992px) {
     .intro-video-container {
-        width: 75%;
-        padding: 0 15px;
+        width: 92%;
+        padding: 0;
         margin: 0 auto 10px;
     }
 
@@ -748,8 +750,8 @@ a:hover{
 
 @media (max-width: 576px) {
     .intro-video-container {
-        width: 75%;
-        padding: 0 10px;
+        width: 96%;
+        padding: 0;
         margin: 0 auto 8px;
     }
 
@@ -784,4 +786,49 @@ html body .contact-item:active {
         transition-duration: 0.01ms !important;
     }
     html { scroll-behavior: auto !important; }
+}
+/* ── 移动端修正 ──
+   注意：这个文件里的媒体查询大多写在基础规则「之前」，会被后面的基础规则
+   覆盖（.spacer 的 25vh、.happyface-container 的 400×400 都是这样）。
+   所以这一段必须留在文件末尾才生效。 */
+@media (max-width: 768px) {
+    .spacer { height: 8vh; }
+
+    .happyface-container {
+        width: 100%;
+        max-width: 300px;
+        height: 300px;      /* 贴纸是绝对定位的，容器必须给高度，否则会塌成 0 */
+        margin: 10px auto;
+    }
+
+    .happyface { width: 100%; height: auto; }
+
+    .intro-video-container { width: 92%; padding: 0; }
+}
+
+@media (max-width: 576px) {
+    .spacer { height: 4vh; }
+
+    .happyface-container {
+        max-width: 210px;
+        height: 210px;
+        margin: 8px auto;
+    }
+
+    .intro-video-container { width: 96%; }
+}
+
+/* 两个并排的卡片按钮在窄窗口里会各自折成两行，很难看。
+   与其让文字换行，不如让按钮上下排。 */
+@media (max-width: 600px) {
+    .button-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .button-group .card-button {
+        width: 100%;
+        text-align: center;
+    }
 }
