@@ -59,7 +59,7 @@
     font-size: 18px;
     color: #000000;
     margin-bottom: 6px;
-    font-family: sfpro, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-weight: 300;
 }
 
@@ -120,7 +120,7 @@
     font-size: 18px;
     color: #000000;
     margin-bottom: 6px;
-    font-family: sfpro, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-weight: 300;
 } 
 /* ── 页面副目录：吸附标签条 ── */
