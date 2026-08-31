@@ -47,12 +47,474 @@
         .content-card .content-description p { font-size: 15px; line-height: 1.55; margin-bottom: 14px; }
         .content-card .content-description h2 { font-size: 21px; margin-bottom: 10px; }
 
+        /* Xiaohongshu creator feature: the overview stays light; performance detail lives in a modal. */
+        .xhs-feature-card {
+            position: relative;
+            display: flex;
+            min-height: 220px;
+            scroll-margin-top: 110px;
+            margin-bottom: 22px;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid #ececec;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .xhs-feature-card::before {
+            content: "";
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 5px;
+            background: #ff2442;
+            z-index: 2;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .xhs-feature-card:hover {
+                box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+            }
+        }
+
+        .xhs-feature-copy {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 0;
+            padding: 22px 26px;
+            text-align: center;
+        }
+
+        .xhs-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 9px;
+        }
+
+        .xhs-title-row .xhs-brand-logo {
+            width: 44px;
+            height: 44px;
+            margin: -7px -6px;
+        }
+
+        .xhs-kicker {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            color: #ff2442;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .xhs-kicker::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            flex: 0 0 auto;
+            border-radius: 50%;
+            background: #ff2442;
+            box-shadow: 0 0 0 4px rgba(255, 36, 66, 0.1);
+        }
+
+        .xhs-feature-copy h2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin: 0;
+            color: #222;
+            font-size: 21px;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .xhs-feature-copy > p {
+            max-width: 660px;
+            margin: 0 0 14px;
+            color: #555;
+            font-size: 15px;
+            line-height: 1.55;
+            text-align: center;
+        }
+
+        .xhs-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+        }
+
+        .xhs-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            color: #fff;
+            background: #ff2442;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.2;
+            text-decoration: none;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .xhs-button:hover {
+            color: #fff;
+            background: #e81734;
+            transform: translateY(-2px);
+        }
+
+        .xhs-button-secondary {
+            color: #333;
+            background: #fff;
+            border-color: #000;
+        }
+
+        .xhs-button-secondary:hover {
+            color: #fff;
+            background: #000;
+        }
+
+        .xhs-feature-visual {
+            position: relative;
+            display: flex;
+            width: calc(220px * 16 / 9);
+            height: 220px;
+            flex: 0 0 auto;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 26px;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 82% 18%, rgba(255, 36, 66, 0.12), transparent 29%),
+                linear-gradient(145deg, #fafafa, #fff1f3);
+        }
+
+        .xhs-account-name {
+            margin: 0 0 3px;
+            color: #222;
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .xhs-profile-block {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .xhs-avatar {
+            width: 58px;
+            height: 58px;
+            flex: 0 0 auto;
+            object-fit: cover;
+            border: 1px solid #e1e1e1;
+            border-radius: 50%;
+        }
+
+        .xhs-profile-text {
+            min-width: 0;
+            text-align: left;
+        }
+
+        .xhs-profile-bio {
+            margin: 0;
+            color: #777;
+            font-size: 9px;
+            line-height: 1.35;
+        }
+
+        .xhs-brand-lockup {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .xhs-brand-logo {
+            display: block;
+            width: 56px;
+            height: 56px;
+            flex: 0 0 auto;
+            margin: -5px;
+            object-fit: contain;
+        }
+
+        .xhs-brand-name strong,
+        .xhs-brand-name span { display: block; }
+
+        .xhs-brand-name strong {
+            color: #222;
+            font-size: 17px;
+            line-height: 1.1;
+        }
+
+        .xhs-brand-name span {
+            margin-top: 3px;
+            color: #999;
+            font-size: 10px;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+        }
+
+        .xhs-overview-stats {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            width: 100%;
+            gap: 10px;
+        }
+
+        .xhs-overview-stat {
+            padding: 12px 10px;
+            background: rgba(255, 255, 255, 0.86);
+            border: 1px solid rgba(255, 36, 66, 0.12);
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .xhs-overview-stat strong,
+        .xhs-overview-stat span {
+            display: block;
+        }
+
+        .xhs-overview-stat strong {
+            margin-bottom: 5px;
+            color: #222;
+            font-size: 23px;
+            line-height: 1;
+        }
+
+        .xhs-overview-stat span {
+            color: #777;
+            font-size: 9px;
+            line-height: 1.25;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .xhs-modal {
+            position: fixed;
+            inset: 0;
+            width: min(860px, calc(100% - 32px));
+            max-height: calc(100vh - 40px);
+            margin: auto;
+            padding: 0;
+            overflow: auto;
+            background: #fff;
+            border: 0;
+            border-radius: 16px;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+        }
+
+        .xhs-modal::backdrop {
+            background: rgba(20, 20, 20, 0.56);
+            backdrop-filter: blur(3px);
+        }
+
+        .xhs-modal-inner {
+            position: relative;
+            padding: 30px;
+        }
+
+        .xhs-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            display: flex;
+            width: 34px;
+            height: 34px;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            background: #f4f4f4;
+            border: 0;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .xhs-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0 46px;
+            margin-bottom: 22px;
+        }
+
+        .xhs-modal-header .xhs-brand-logo {
+            width: 52px;
+            height: 52px;
+            margin: -7px;
+        }
+
+        .xhs-modal-header h2 {
+            margin: 0;
+            color: #222;
+            font-size: 24px;
+            line-height: 1.2;
+        }
+
+        .xhs-modal-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .xhs-modal-metric {
+            padding: 14px 12px;
+            background: #fff6f7;
+            border: 1px solid rgba(255, 36, 66, 0.13);
+            border-radius: 10px;
+        }
+
+        .xhs-modal-metric strong,
+        .xhs-modal-metric span { display: block; }
+
+        .xhs-modal-metric strong {
+            margin-bottom: 5px;
+            color: #222;
+            font-size: 22px;
+            line-height: 1;
+        }
+
+        .xhs-modal-metric span {
+            color: #777;
+            font-size: 10px;
+            line-height: 1.3;
+            text-transform: uppercase;
+        }
+
+        .xhs-modal-section-title {
+            margin: 0 0 10px;
+            color: #333;
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .xhs-modal-posts {
+            display: grid;
+            gap: 9px;
+            margin-bottom: 18px;
+        }
+
+        .xhs-modal-post {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 18px;
+            padding: 13px 15px;
+            background: #fafafa;
+            border: 1px solid #ececec;
+            border-radius: 10px;
+        }
+
+        .xhs-modal-post small {
+            display: block;
+            margin-bottom: 3px;
+            color: #ff2442;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .xhs-modal-post h3 {
+            margin: 0;
+            color: #2b2b2b;
+            font-size: 14px;
+            line-height: 1.35;
+        }
+
+        .xhs-modal-post-stat {
+            min-width: 92px;
+            text-align: right;
+        }
+
+        .xhs-modal-post-stat strong,
+        .xhs-modal-post-stat span { display: block; }
+
+        .xhs-modal-post-stat strong {
+            color: #222;
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .xhs-modal-post-stat span {
+            margin-top: 4px;
+            color: #888;
+            font-size: 9px;
+            text-transform: uppercase;
+        }
+
+        .xhs-modal-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .xhs-data-note {
+            margin: 0;
+            color: #999;
+            font-size: 10px;
+            line-height: 1.35;
+        }
+
         @media (max-width: 768px) {
             .content-card .content-media { height: auto; }
             .content-card .content-media:has(img) { max-width: 100%; }
             .content-card .content-media:has(img) img { width: 100%; height: 180px; object-fit: cover; }
             .content-card .content-media:has(.canva-embed) { width: 100%; }
             .content-card .content-media .canva-embed { height: 0; padding-top: 56.25%; }
+
+            .xhs-feature-card { flex-direction: column; }
+            .xhs-feature-copy { padding: 24px 20px 20px; }
+            .xhs-feature-copy h2 { font-size: 20px; }
+            .xhs-feature-visual { width: 100%; height: auto; min-height: 176px; padding: 20px; }
+            .xhs-modal {
+                inset: auto 0 0;
+                width: 100%;
+                max-width: none;
+                max-height: 85dvh;
+                margin: 0;
+                border-radius: 18px 18px 0 0;
+            }
+            .xhs-modal[open] { animation: xhs-sheet-up 0.28s ease-out; }
+            .xhs-modal-inner { padding: 24px 20px; }
+            .xhs-modal-header h2 { font-size: 21px; }
+            .xhs-modal-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .xhs-modal-post { gap: 10px; padding: 12px; }
+            .xhs-modal-post-stat { min-width: 78px; }
+            .xhs-modal-footer { align-items: flex-start; flex-direction: column; }
+        }
+
+        @keyframes xhs-sheet-up {
+            from { transform: translateY(100%); opacity: 0.75; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .category-heading {
@@ -345,6 +807,8 @@
         .links-container .content-card:nth-child(4) { animation-delay: 0.4s !important; }
         .links-container .content-card:nth-child(5) { animation-delay: 0.5s !important; }
         .links-container .content-card:nth-child(6) { animation-delay: 0.6s !important; }
+        .links-container .content-cards > .xhs-feature-card { animation-delay: 0.3s !important; }
+        .links-container .content-cards > .xhs-feature-card + .xhs-modal + .content-card { animation-delay: 0.4s !important; }
     
         /* 手机端卡片更贴边（写在最后，避免被上面的媒体查询盖掉） */
         @media (max-width: 600px) {
@@ -417,6 +881,79 @@
                             </div>
                         </div>
                     </div>
+
+                    <article class="xhs-feature-card" id="xiaohongshu-creator" aria-labelledby="xhs-feature-title">
+                        <div class="xhs-feature-copy">
+                            <div class="xhs-title-row">
+                                <h2 id="xhs-feature-title">
+                                    <span>Content Creator ·</span>
+                                    <img class="xhs-brand-logo" src="img/xiaohongshu/xiaohongshu-logo-transparent.png" alt="Xiaohongshu logo">
+                                    <span>Xiaohongshu</span>
+                                </h2>
+                            </div>
+                            <p>For the past three years, I’ve created and optimized content on Xiaohongshu (RedNote), one of China’s leading lifestyle platforms. I turn USC and Los Angeles experiences into useful, visually compelling stories and use performance data to improve reach and engagement.</p>
+                            <div class="xhs-actions">
+                                <button type="button" class="xhs-button" id="xhs-details-open" aria-haspopup="dialog">View Highlights</button>
+                                <a href="https://www.xiaohongshu.com/user/profile/60defd240000000001000586" target="_blank" rel="noopener noreferrer" class="xhs-button xhs-button-secondary">Visit My Profile →</a>
+                            </div>
+                        </div>
+                        <div class="xhs-feature-visual" aria-label="Xiaohongshu creator overview">
+                            <div class="xhs-profile-block">
+                                <img class="xhs-avatar" src="img/xiaohongshu/hapi-avatar.png" alt="Hapi吃好喝好 profile avatar">
+                                <div class="xhs-profile-text">
+                                    <p class="xhs-account-name">@Hapi吃好喝好</p>
+                                </div>
+                            </div>
+                            <div class="xhs-overview-stats" aria-label="Xiaohongshu profile totals">
+                                <div class="xhs-overview-stat"><strong>37K+</strong><span>Likes &amp; saves</span></div>
+                                <div class="xhs-overview-stat"><strong>151</strong><span>Published notes</span></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <dialog class="xhs-modal" id="xhs-details-modal" aria-labelledby="xhs-modal-title">
+                        <div class="xhs-modal-inner">
+                            <button type="button" class="xhs-modal-close" id="xhs-details-close" aria-label="Close performance highlights">×</button>
+                            <header class="xhs-modal-header">
+                                <img class="xhs-brand-logo" src="img/xiaohongshu/xiaohongshu-logo-transparent.png" alt="Xiaohongshu logo">
+                                <h2 id="xhs-modal-title">Content Performance</h2>
+                            </header>
+                            <div class="xhs-modal-metrics" aria-label="Performance metrics">
+                                <div class="xhs-modal-metric"><strong>37K+</strong><span>Total likes &amp; saves</span></div>
+                                <div class="xhs-modal-metric"><strong>752K</strong><span>Analyzed impressions</span></div>
+                                <div class="xhs-modal-metric"><strong>164.8K</strong><span>Top-post impressions</span></div>
+                                <div class="xhs-modal-metric"><strong>29.8%</strong><span>Peak cover CTR</span></div>
+                            </div>
+                            <h3 class="xhs-modal-section-title">Selected notes</h3>
+                            <div class="xhs-modal-posts">
+                                <article class="xhs-modal-post">
+                                    <div>
+                                        <small>LA local discovery</small>
+                                        <h3>DTLA这个广告居然是画出来的</h3>
+                                    </div>
+                                    <div class="xhs-modal-post-stat"><strong>164.8K</strong><span>Impressions</span></div>
+                                </article>
+                                <article class="xhs-modal-post">
+                                    <div>
+                                        <small>USC student resource</small>
+                                        <h3>USC学生免费体检全攻略！无需校内保险</h3>
+                                    </div>
+                                    <div class="xhs-modal-post-stat"><strong>408</strong><span>Likes &amp; saves</span></div>
+                                </article>
+                                <article class="xhs-modal-post">
+                                    <div>
+                                        <small>Shareable discovery</small>
+                                        <h3>缺德舅新品｜这个巧克力好喝到爆炸</h3>
+                                    </div>
+                                    <div class="xhs-modal-post-stat"><strong>604</strong><span>Shares</span></div>
+                                </article>
+                            </div>
+                            <div class="xhs-modal-footer">
+                                <p class="xhs-data-note">Performance analysis based on February–August 2026.</p>
+                                <a href="https://www.xiaohongshu.com/user/profile/60defd240000000001000586" target="_blank" rel="noopener noreferrer" class="xhs-button">Visit My Profile →</a>
+                            </div>
+                        </div>
+                    </dialog>
 
                     <div class="content-card">
                         <div class="content-description">
@@ -639,9 +1176,21 @@
                 if (!content.classList.contains('collapsed')) content.style.maxHeight = '';
             });
         }
+
+        const xhsDetailsModal = document.getElementById('xhs-details-modal');
+        const xhsDetailsOpen = document.getElementById('xhs-details-open');
+        const xhsDetailsClose = document.getElementById('xhs-details-close');
+
+        xhsDetailsOpen.addEventListener('click', () => xhsDetailsModal.showModal());
+        xhsDetailsClose.addEventListener('click', () => xhsDetailsModal.close());
+        xhsDetailsModal.addEventListener('click', (event) => {
+            if (event.target === xhsDetailsModal) xhsDetailsModal.close();
+        });
+        xhsDetailsModal.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') xhsDetailsModal.close();
+        });
     </script>
 
     <script src="../js/section-toc.js"></script>
 </body>
 </html>
-
