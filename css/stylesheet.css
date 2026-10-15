@@ -162,39 +162,40 @@ h2 {
 }
 
 /* 整条时间线比旧版提前 0.9s：首个「Happy Wang」和 intro 行几乎同时出现，避免访客还没看到名字就滑走 */
+/* 上一个词先快速滑出（0.35s），快消失时下一个词才滑入，两词几乎不重叠；每个词约 2s 一轮 */
 .adjective:nth-child(1) {
-    animation: slideIn 1s forwards, slideOut 1s forwards;
-    animation-delay: 0.6s, 2.1s;
+    animation: slideIn 0.6s forwards, slideOut 0.35s ease-in forwards;
+    animation-delay: 0.6s, 2.3s;
 }
 
 .adjective:nth-child(2) {
-    animation: slideIn 1s forwards, slideOut 1s forwards;
-    animation-delay: 3.6s, 5.1s;
+    animation: slideIn 0.6s forwards, slideOut 0.35s ease-in forwards;
+    animation-delay: 2.6s, 4.3s;
 }
 
 .adjective:nth-child(3) {
-    animation: slideIn 1s forwards, slideOut 1s forwards;
-    animation-delay: 6.6s, 8.1s;
+    animation: slideIn 0.6s forwards, slideOut 0.35s ease-in forwards;
+    animation-delay: 4.6s, 6.3s;
 }
 
 .adjective:nth-child(4) {
-    animation: slideIn 1s forwards, slideOut 1s forwards;
-    animation-delay: 9.6s, 11.1s;
+    animation: slideIn 0.6s forwards, slideOut 0.35s ease-in forwards;
+    animation-delay: 6.6s, 8.3s;
 }
 
 .adjective:nth-child(5) {
-    animation: slideIn 1s forwards, slideOut 1s forwards;
-    animation-delay: 12.6s, 14.1s;
+    animation: slideIn 0.6s forwards, slideOut 0.35s ease-in forwards;
+    animation-delay: 8.6s, 10.3s;
 }
 
 .adjective:nth-child(6) {
-    animation: slideIn 1s forwards, slideOut 1s forwards;
-    animation-delay: 15.6s, 17.1s;
+    animation: slideIn 0.6s forwards, slideOut 0.35s ease-in forwards;
+    animation-delay: 10.6s, 12.3s;
 }
 
 .adjective:nth-child(7) {
-    animation: slideIn 1s forwards;
-    animation-delay: 18.6s;
+    animation: slideIn 0.6s forwards;
+    animation-delay: 12.6s;
 }
 
 @keyframes fadeIn {
