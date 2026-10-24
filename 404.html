@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 · Happy's Website</title>
+  <meta name="robots" content="noindex">
+  <meta name="referrer" content="no-referrer">
+  <script>
+    // 插件页已搬到新网址：旧地址下的任何文件（下载 zip 等）都按同样的路径跳过去
+    (function () {
+      var NEW = "https://madebyhappy.github.io";
+      // 旧文件夹名 → 新仓库名（豆瓣插件在新账号叫 douban-rating）
+      var MOVED = { "wisebird": "wisebird", "douban-rating-ext": "douban-rating", "happysubs": "happysubs", "bilibili-downloader": "bilibili-downloader" };
+      var parts = location.pathname.split("/");
+      var first = parts[1];
+      if (MOVED.hasOwnProperty(first)) {
+        parts[1] = MOVED[first];
+        location.replace(NEW + parts.join("/") + location.search + location.hash);
+      } else if (first === "projects-by-happy") {
+        // Projects by Happy 改名 Made by Happy，整个搬到新网站首页
+        location.replace(NEW + "/" + location.hash);
+      }
+    })();
+  </script>
+</head>
+<body style="font-family:system-ui,sans-serif;padding:40px 16px;text-align:center;">
+  <h1>404</h1>
+  <p>找不到这个页面 · Page not found</p>
+  <p><a href="/">← huanshuowang.com</a></p>
+</body>
+</html>
